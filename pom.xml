@@ -28,18 +28,10 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>5.0.7.RELEASE</version>
-            </dependency>
-
-            <!--guava-->
-            <dependency>
-                <groupId>com.fasterxml.jackson.datatype</groupId>
-                <artifactId>jackson-datatype-guava</artifactId>
-                <version>2.5.3</version>
             </dependency>
 
             <dependency>
@@ -63,6 +55,7 @@
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.46</version>
             </dependency>
 
             <dependency>
@@ -77,6 +70,19 @@
                 <version>RELEASE</version>
             </dependency>
 
+            <!--quartz-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-quartz</artifactId>
+                <version>RELEASE</version>
+            </dependency>
+
+            <!-- xss过滤组件 -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>1.9.2</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

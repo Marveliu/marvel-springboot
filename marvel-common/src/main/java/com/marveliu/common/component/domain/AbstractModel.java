@@ -1,6 +1,6 @@
 package com.marveliu.common.component.domain;
 
-import com.marveliu.common.constants.Constants;
+import com.marveliu.common.constants.Status;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
@@ -22,11 +22,11 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
     @Column(columnDefinition = "int default 0")
     private int creator = 0;
 
-    @Column(updatable = false, columnDefinition = "datetime " +
+    @Column(updatable = false, columnDefinition = "datetime(3) " +
             "NOT NULL " +
-            "DEFAULT CURRENT_TIMESTAMP " +
+            "DEFAULT CURRENT_TIMESTAMP(3) " +
             "COMMENT '创建时间'")
-    private Date createTime;
+    private Long createTime;
 
     @ApiModelProperty(value = "最后修改人")
     @Column(columnDefinition = "int default 0")
@@ -34,7 +34,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
 
     @Column(columnDefinition = "String " +
             "COMMENT '最近修改时间'")
-    private Date operateTime;
+    private Long operateTime;
 
     @Column(columnDefinition = "varchar(200) " +
             "COMMENT '备注'")
@@ -42,7 +42,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
 
     @ApiModelProperty(value = "标记删除字段 0未删除 1已删除 ")
     @Column(name = "del", columnDefinition = "tinyint default 0")
-    private int del = Constants.DEL_NO;
+    private int del = Status.DEL_NO;
 
 
     public int getCreator() {
@@ -53,11 +53,11 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
         this.creator = creator;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
@@ -69,11 +69,11 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
         this.updator = updator;
     }
 
-    public Date getOperateTime() {
+    public Long getOperateTime() {
         return operateTime;
     }
 
-    public void setOperateTime(Date operateTime) {
+    public void setOperateTime(Long operateTime) {
         this.operateTime = operateTime;
     }
 

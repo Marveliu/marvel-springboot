@@ -14,7 +14,7 @@
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
-        url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/pboc_polling?characterEncoding=utf-8&useSSL=false }
+        url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/marvel-springboot?characterEncoding=utf-8&useSSL=false }
         username: ${DB_USERNAME:root}
         password: ${DB_PASSWORD:root}
         type: com.alibaba.druid.pool.DruidDataSource
@@ -24,7 +24,6 @@ spring:
         show_sql: false
         hibernate:
               ddl-auto: update
-
 
 server:
     port: ${PORT:8080}

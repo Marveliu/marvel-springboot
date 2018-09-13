@@ -5,7 +5,7 @@ package com.marveliu.common.constants;
  * @Date 2018/7/18 8:41 PM
  **/
 
-public class Constants {
+public class Status {
 
     /**
      * 已删除

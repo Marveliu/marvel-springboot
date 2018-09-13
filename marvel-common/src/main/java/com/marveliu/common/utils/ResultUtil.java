@@ -9,13 +9,26 @@ import com.marveliu.common.constants.ResultCode;
 
 public class ResultUtil {
 
-    //当正确时返回的值
+    /**
+     * 返回正确结果
+     *
+     * @param object
+     * @param resultCode
+     * @return
+     */
     public static Result success(Object object, ResultCode resultCode) {
         Result result = new Result(resultCode.getCode());
         result.setData(object);
         result.setMsg(resultCode.getMsg());
         return result;
     }
+
+    /**
+     * 返回正确结果
+     *
+     * @param data
+     * @return
+     */
     public static Result success(Object data) {
         Result result = new Result();
         result.setCode(ResultCode.SUCCESS.getCode());
@@ -25,12 +38,21 @@ public class ResultUtil {
     }
 
 
+    /**
+     * 默认返回正确结果
+     *
+     * @return
+     */
     public static Result success() {
         return new Result(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg());
     }
 
 
-    // 默认错误返回
+    /**
+     * 默认返回错误结果
+     *
+     * @return
+     */
     public static Result error() {
         Result result = new Result(ResultCode.ERROR.getCode());
         result.setMsg(ResultCode.ERROR.getMsg());
@@ -38,7 +60,12 @@ public class ResultUtil {
 
     }
 
-    //当错误时返回的值
+    /**
+     * 返回错误结果
+     *
+     * @param msg
+     * @return
+     */
     public static Result error(String msg) {
         Result result = new Result(ResultCode.ERROR.getCode());
         result.setMsg(msg);
@@ -46,7 +73,13 @@ public class ResultUtil {
 
     }
 
-    public static Result error(ResultCode resultCode){
+    /**
+     * 返回错误结果
+     *
+     * @param resultCode
+     * @return
+     */
+    public static Result error(ResultCode resultCode) {
         Result result = new Result(resultCode.getCode());
         result.setMsg(resultCode.getMsg());
         return result;

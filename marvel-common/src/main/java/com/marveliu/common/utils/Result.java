@@ -10,11 +10,20 @@ import java.util.Map;
 
 public class Result<T> {
 
-    private int code;//状态码
+    /**
+     * 状态码
+     */
+    private int code;
 
-    private String msg;//信息
+    /**
+     * 信息
+     */
+    private String msg;
 
-    private Object data;//数据
+    /**
+     * 数据
+     */
+    private Object data;
 
     public int getCode() {
         return code;

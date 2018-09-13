@@ -1,7 +1,7 @@
 package com.marveliu.common.component.service.impl;
 
-import com.marveliu.common.constants.Constants;
-import com.marveliu.common.constants.QueryTypeEnum;
+import com.marveliu.common.constants.Status;
+import com.marveliu.common.constants.QueryType;
 import com.marveliu.common.component.dao.BaseDao;
 import com.marveliu.common.component.domain.AbstractModel;
 import com.marveliu.common.component.domain.BaseModel;
@@ -50,7 +50,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
     public T save(T t) {
         if (t instanceof AbstractModel) {
             AbstractModel<T> baseModel = (AbstractModel<T>) t;
-            Date current = new Date(System.currentTimeMillis());
+            Long current = System.currentTimeMillis();
             if (baseModel.getId() == null) {
                 baseModel.setCreateTime(current);
             } else {
@@ -72,7 +72,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         for (T t : entities) {
             if (t instanceof AbstractModel) {
                 AbstractModel<T> baseModel = (AbstractModel<T>) t;
-                Date current = new Date(System.currentTimeMillis());
+                Long current = System.currentTimeMillis();
                 if (baseModel.getId() == null) {
                     baseModel.setCreateTime(current);
                 } else {
@@ -117,8 +117,8 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
     public void vdel(ID id) {
         T t = findById(id);
         AbstractModel<T> baseModel = (AbstractModel<T>) t;
-        baseModel.setOperateTime(new Date(System.currentTimeMillis()));
-        baseModel.setDel(Constants.DEL_YES);
+        baseModel.setOperateTime(System.currentTimeMillis());
+        baseModel.setDel(Status.DEL_YES);
         getDAO().save(t);
     }
 
@@ -130,8 +130,8 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
     @Override
     public void vdel(T t) {
         AbstractModel<T> baseModel = (AbstractModel<T>) t;
-        baseModel.setOperateTime(new Date(System.currentTimeMillis()));
-        baseModel.setDel(Constants.DEL_NO);
+        baseModel.setOperateTime(System.currentTimeMillis());
+        baseModel.setDel(Status.DEL_NO);
         getDAO().save(t);
     }
 
@@ -236,11 +236,12 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
             return cb.equal(root.get(arr[0]).as(value.getClass()), value);
         }
 
-        if (QueryTypeEnum.equal.name().equals(arr[1])) {
+        if (QueryType.equal.name().equals(arr[1])) {
             return cb.equal(root.get(arr[0]).as(value.getClass()), value);
         }
-        if (QueryTypeEnum.in.name().equals(arr[1])) {
-            if (QueryTypeEnum.in.name().equals(arr[1])) {
+        // todo:多类型in支持
+        if (QueryType.in.name().equals(arr[1])) {
+            if (QueryType.in.name().equals(arr[1])) {
                 // todo:Integer 判定
                 CriteriaBuilder.In<Object> in = cb.in(root.get(arr[0]));
                 try {
@@ -251,25 +252,24 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
                     logger.error("error", e);
                 }
                 return in;
-                // return cb.in(root.get(arr[0]).as(value.getClass()),value));
             }
         }
-        if (QueryTypeEnum.like.name().equals(arr[1])) {
+        if (QueryType.like.name().equals(arr[1])) {
             return cb.like(root.get(arr[0]).as(String.class), String.format("%%%s%%", value));
         }
-        if (QueryTypeEnum.ne.name().equals(arr[1])) {
+        if (QueryType.ne.name().equals(arr[1])) {
             return cb.notEqual(root.get(arr[0]).as(value.getClass()), value);
         }
-        if (QueryTypeEnum.lt.name().equals(arr[1])) {
+        if (QueryType.lt.name().equals(arr[1])) {
             return getLessThanPredicate(arr, value, root, cb);
         }
-        if (QueryTypeEnum.lte.name().equals(arr[1])) {
+        if (QueryType.lte.name().equals(arr[1])) {
             return getLessThanOrEqualToPredicate(arr, value, root, cb);
         }
-        if (QueryTypeEnum.gt.name().equals(arr[1])) {
+        if (QueryType.gt.name().equals(arr[1])) {
             return getGreaterThanPredicate(arr, value, root, cb);
         }
-        if (QueryTypeEnum.gte.name().equals(arr[1])) {
+        if (QueryType.gte.name().equals(arr[1])) {
             return getGreaterThanOrEqualToPredicate(arr, value, root, cb);
         }
         throw new UnsupportedOperationException(String.format("不支持的查询类型[%s]", arr[1]));
@@ -289,6 +289,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         if (Float.class == value.getClass()) {
             return cb.lessThan(root.get(arr[0]).as(Float.class), (float) value);
         }
+        // 不建议存date
         if (Date.class == value.getClass()) {
             return cb.lessThan(root.get(arr[0]).as(Date.class), (Date) value);
         }
@@ -312,6 +313,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         if (Float.class == value.getClass()) {
             return cb.lessThanOrEqualTo(root.get(arr[0]).as(Float.class), (float) value);
         }
+        // 不建议存date
         if (Date.class == value.getClass()) {
             return cb.lessThanOrEqualTo(root.get(arr[0]).as(Date.class), (Date) value);
         }
@@ -335,6 +337,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         if (Float.class == value.getClass()) {
             return cb.greaterThan(root.get(arr[0]).as(Float.class), (float) value);
         }
+        // 不建议存date
         if (Date.class == value.getClass()) {
             return cb.greaterThan(root.get(arr[0]).as(Date.class), (Date) value);
         }
@@ -358,6 +361,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         if (Float.class == value.getClass()) {
             return cb.greaterThanOrEqualTo(root.get(arr[0]).as(Float.class), (float) value);
         }
+        // 不建议存date
         if (Date.class == value.getClass()) {
             return cb.greaterThanOrEqualTo(root.get(arr[0]).as(Date.class), (Date) value);
         }
