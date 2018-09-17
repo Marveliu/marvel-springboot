@@ -16,7 +16,6 @@ import java.util.Map;
 
 public interface BaseService<T extends BaseModel<ID>, ID extends Serializable> {
 
-
     /**
      * 获得原生jpa接口，调用自定义sql
      *
@@ -60,6 +59,12 @@ public interface BaseService<T extends BaseModel<ID>, ID extends Serializable> {
      */
     T findById(ID id);
 
+
+    /**
+     * 查询全部
+     *
+     * @return
+     */
     List<T> findAll();
 
     /**

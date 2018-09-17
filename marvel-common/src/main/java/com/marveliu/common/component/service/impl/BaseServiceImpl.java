@@ -27,17 +27,14 @@ import java.util.*;
 /**
  * @Author Marveliu
  * @Date 2018/7/18 8:43 PM
+ * @Description: 基于Jpa进行Crud的封装
  **/
-
-// todo:虚删除查询操作
-
 @SuppressWarnings("unchecked")
 public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serializable> implements BaseService<T, ID> {
 
     private static Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
 
     public abstract BaseDao<T, ID> getDAO();
-
 
     /**
      * 保存实体
@@ -167,7 +164,6 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         return getDAO().findAll(pageable);
     }
 
-
     /**
      * 条件查询
      *
@@ -228,7 +224,6 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         Page<T> page = getDAO().findAll(spec, pageable);
         return page;
     }
-
 
     private Predicate getPredicate(String[] arr, Object value,
                                    Root<T> root, CriteriaBuilder cb) {
@@ -396,6 +391,5 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
     public static void copyNullProperties(Object source, Object target) {
         BeanUtils.copyProperties(source, target, getNoNullProperties(target));
     }
-
 
 }

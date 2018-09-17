@@ -1,19 +1,18 @@
 package com.marveliu.web.aop;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
+
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @Author Marveliu
@@ -26,43 +25,44 @@ public class WebLogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-    ThreadLocal<Long> startTimeThreadLocal = new ThreadLocal<Long>();
+    private static final String searchString = "cn.hyperchain.web.web";
 
-    @Pointcut("execution(public * com.marveliu.web.controller.*.*(..))")
+    ThreadLocal<StringBuilder> logs = new ThreadLocal<>();
+
+    @Pointcut("execution(public * cn.hyperchain.web.web.controller..*(..)) && !execution(public * cn.hyperchain.web.web.controller.SummaryController.*(..))")
     public void webLog() {
     }
 
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
-        startTimeThreadLocal.set(System.currentTimeMillis());
         Object[] arr = joinPoint.getArgs();
-
+        // 接收到请求，记录请求内容
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        // 记录下请求内容
+        StringBuilder str = new StringBuilder();
+        logs.set(str);
+        logs.get().append(String.format("请求地址:[%s],HTTP METHOD:[%s],IP:[%s],CLASS_METHOD:[%s],参数:%s,",
+                request.getRequestURL().toString(),
+                request.getMethod(),
+                request.getRemoteAddr(),
+                joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName(),
+                StringUtils.abbreviate(Arrays.toString(joinPoint.getArgs()), 100)
+        ));
     }
 
-    @AfterReturning(pointcut = "webLog()")
-    public void doAfterReturning(JoinPoint joinPoint) throws Throwable {
-        long usedTime = System.currentTimeMillis() - startTimeThreadLocal.get();
-        Object[] arr = joinPoint.getArgs();
-        List<Object> list = Lists.newArrayList();
-        for (Object obj : arr) {
-            if (obj == null) {
-                continue;
-            }
-            if (obj instanceof HttpServletRequest || obj instanceof HttpServletResponse) {
-                continue;
-            }
-            list.add(obj.toString());
-        }
-        String args = Joiner.on(",").join(list);
-        String key = String.format("method=[%s.%s]",
-                joinPoint.getSignature().getDeclaringType().getSimpleName(),
-                joinPoint.getSignature().getName());
-        if (usedTime > 100) {
-            logger.info(String.format("method=[%s],args=[%s] use time=%d ms", key, args, usedTime));
-        } else if (logger.isDebugEnabled()) {
-            logger.debug(String.format("method=[%s],args=[%s] use time=%d ms", key, args, usedTime));
-        }
 
+    @Around("webLog()")
+    public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        // ob 为方法的返回值
+        Object ob = pjp.proceed();
+        logs.get().append(String.format("返回值:%s,耗时:%d",
+                StringUtils.abbreviate(ob.toString(), 100),
+                System.currentTimeMillis() - startTime));
+        logger.info(StringUtils.replace(logs.get().toString(), searchString, "*"));
+        return ob;
     }
+
 
 }
