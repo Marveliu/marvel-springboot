@@ -8,6 +8,7 @@
 - [Features](#features)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
+- [Reference](#reference)
 - [License](#license)
 
 ## Background
@@ -32,13 +33,13 @@
 4. 任务调度
 
 
-
-
-
-
 ## Maintainers
 
 [@Marveliu](https://github.com/Marveliu)
+
+## Reference
+
+1. [Druid连接池以及Druid监控](https://www.jianshu.com/p/139405d267d3)
 
 ## Contribute
 

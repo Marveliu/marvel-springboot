@@ -11,13 +11,40 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
-        url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/marvel_springboot?characterEncoding=utf-8&useSSL=false }
-        username: ${DB_USERNAME:root}
-        password: ${DB_PASSWORD:root}
         type: com.alibaba.druid.pool.DruidDataSource
+        druid:
+          # 配置测试查询语句
+          validationQuery: SELECT 1 FROM DUAL
+          # 初始化大小，最小，最大
+          initialSize: 10
+          minIdle: 10
+          maxActive: 200
+          # 配置一个连接在池中最小生存的时间，单位是毫秒
+          minEvictableIdleTimeMillis: 180000
+          testOnBorrow: false
+          testWhileIdle: true
+          removeAbandoned: true
+          removeAbandonedTimeout: 1800
+          logAbandoned: true
+          # 打开PSCache，并且指定每个连接上PSCache的大小
+          poolPreparedStatements: true
+          maxOpenPreparedStatements: 100
+          # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+          filters: stat,wall,log4j
+          # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+          connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+        url: jdbc:mysql://127.0.0.1:3306/marvel_springboot?characterEncoding=utf-8&useSSL=false
+        username: root
+        password: root
+
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
@@ -25,9 +52,12 @@ spring:
         hibernate:
               ddl-auto: update
 
+
 server:
     port: ${PORT:8080}
 
-log4j:
-    configuration: classpath:log4j.properties
+#日志
+logging:
+  config: classpath:log/logback.xml
+  path: ./logs
 

@@ -19,7 +19,7 @@ public class AsyncUtil {
 
     ThreadLocal<Integer> threadLocal = new ThreadLocal<>();
 
-    @Async
+    @Async("taskExecutor")
     public void test() {
         count++;
         for (int n = 0; n < 10; n++) {
@@ -32,7 +32,7 @@ public class AsyncUtil {
         }
     }
 
-    @Async
+    @Async("taskExecutor")
     public void test1() {
         count++;
         for (int n = 0; n < 10; n++) {
