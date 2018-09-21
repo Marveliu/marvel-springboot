@@ -6,6 +6,7 @@
 
 - [Background](#background)
 - [Features](#features)
+- [Branches](#branches)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
 - [Reference](#reference)
@@ -24,6 +25,7 @@
 - rabbitMq
 - dubbo
 - quartz
+- queryDsl
 
 ## features
 
@@ -31,6 +33,12 @@
 2. 全局异常处理以及状态码
 3. 操作日志
 4. 任务调度
+
+## branches
+
+1. [master](https://github.com/Marveliu/marvel-springboot/tree/master):整合框架
+2. [springCloud](https://github.com/Marveliu/marvel-springboot/tree/native):springCloud
+3. [native](https://github.com/Marveliu/marvel-springboot/tree/native):部分原生手写
 
 
 ## Maintainers

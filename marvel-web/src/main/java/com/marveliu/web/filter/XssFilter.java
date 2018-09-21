@@ -1,9 +1,8 @@
 package com.marveliu.web.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +21,8 @@ import java.util.regex.Pattern;
  * @Description:
  **/
 
+@Slf4j
 public class XssFilter implements Filter {
-    private static Logger logger = LoggerFactory.getLogger(XssFilter.class);
 
     //是否过滤富文本内容
     private static boolean IS_INCLUDE_RICH_TEXT = false;
@@ -44,15 +43,15 @@ public class XssFilter implements Filter {
             br.close();
             return sb.toString();
         } catch (Exception e) {
-            logger.error("解析post body失败");
+            log.error("解析post body失败");
         }
         return null;
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("xss filter is open");
+        if (log.isDebugEnabled()) {
+            log.debug("xss filter is open");
         }
 
         HttpServletRequest req = (HttpServletRequest) request;
@@ -63,7 +62,7 @@ public class XssFilter implements Filter {
         // if (!StringUtils.isEmpty(body)) {
         //     for (String s : chars) {
         //         if (body.contains(s)) {
-        //             logger.error(String.format("请求含有非法字符:%s", s));
+        //             log.error(String.format("请求含有非法字符:%s", s));
         //             resp.setStatus(401);
         //             return;
         //         }
@@ -81,7 +80,7 @@ public class XssFilter implements Filter {
         if (!StringUtils.isBlank(body)) {
             for (String s : chars) {
                 if (body.contains(s)) {
-                    logger.error(String.format("请求含有非法字符:%s", s));
+                    log.error(String.format("请求含有非法字符:%s", s));
                     resp.setStatus(401);
                     return;
                 }
@@ -107,8 +106,8 @@ public class XssFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        if (logger.isDebugEnabled()) {
-            logger.debug("xss filter init");
+        if (log.isDebugEnabled()) {
+            log.debug("xss filter init");
         }
         String isIncludeRichText = filterConfig.getInitParameter("isIncludeRichText");
         if (StringUtils.isNotBlank(isIncludeRichText)) {

@@ -1,5 +1,6 @@
 package com.marveliu.web.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -11,9 +12,9 @@ import org.springframework.util.ObjectUtils;
  * @Date 2018/9/16 下午7:30
  **/
 
+@Slf4j
 @Component
 public class AsyncUtil {
-    private static final Logger logger = LoggerFactory.getLogger(AsyncUtil.class);
 
     private static Integer count = 0;
 

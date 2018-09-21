@@ -3,6 +3,7 @@ package com.marveliu.web.utils;
 import com.marveliu.web.annotation.SLog;
 import com.marveliu.web.dao.entity.Log;
 import com.marveliu.web.service.LogService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,12 @@ import java.util.concurrent.TimeUnit;
  * @Description: 处理系统log，分发消息
  **/
 
+@Slf4j
 @Component
 public class SLogUtil implements Runnable {
 
     @Autowired
     private LogService logService;
-
-    private static final Logger logger = LoggerFactory.getLogger(SLogUtil.class);
 
     ExecutorService es;
 
@@ -68,7 +68,7 @@ public class SLogUtil implements Runnable {
             try {
                 boolean re = queue.offer(Logs, 50, TimeUnit.MILLISECONDS);
                 if (!re) {
-                    logger.info("syslog queue is full, drop it ...");
+                    log.info("syslog queue is full, drop it ...");
                 }
             } catch (InterruptedException e) {
             }
@@ -77,13 +77,13 @@ public class SLogUtil implements Runnable {
     /**
      * 同步插入日志
      *
-     * @param log 日志对象
+     * @param slog 日志对象
      */
-    public void sync(Log log) {
+    public void sync(Log slog) {
         try {
-            logService.save(log);
+            logService.save(slog);
         } catch (Throwable e) {
-            logger.info("insert syslog sync fail", e);
+            log.error("insert syslog sync fail", e);
         }
     }
 

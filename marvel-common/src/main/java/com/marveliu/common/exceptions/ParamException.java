@@ -1,6 +1,6 @@
 package com.marveliu.common.exceptions;
 
-import com.marveliu.common.utils.Result;
+import com.marveliu.common.common.page.Result;
 
 /**
  * @Author Marveliu

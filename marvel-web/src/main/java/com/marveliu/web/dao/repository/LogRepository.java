@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public interface LogDao extends BaseDao<Log, Long> {
+public interface LogRepository extends BaseDao<Log, Long> {
 }

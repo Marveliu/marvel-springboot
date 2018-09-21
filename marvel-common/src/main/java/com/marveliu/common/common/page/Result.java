@@ -1,4 +1,4 @@
-package com.marveliu.common.utils;
+package com.marveliu.common.common.page;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,8 @@
 package com.marveliu.web.dao.entity;
 
 import com.marveliu.common.component.domain.AbstractModel;
+import lombok.Data;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.*;
 
@@ -9,6 +11,7 @@ import javax.persistence.*;
  * @Date 2018/9/17 下午10:41
  **/
 
+@Data
 @Entity
 public class Log extends AbstractModel<Long> {
 
@@ -72,63 +75,4 @@ public class Log extends AbstractModel<Long> {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public Integer getto() {
-        return to;
-    }
-
-    public void setto(Integer to) {
-        this.to = to;
-    }
-
-    public String getLog() {
-        return Log;
-    }
-
-    public void setLog(String Log) {
-        this.Log = Log;
-    }
-
-    public Long getReadTime() {
-        return readTime;
-    }
-
-    public void setReadTime(Long readTime) {
-        this.readTime = readTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
 }

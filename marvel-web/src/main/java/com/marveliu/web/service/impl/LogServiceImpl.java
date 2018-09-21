@@ -3,7 +3,7 @@ package com.marveliu.web.service.impl;
 import com.marveliu.common.component.dao.BaseDao;
 import com.marveliu.common.component.service.impl.BaseServiceImpl;
 import com.marveliu.web.dao.entity.Log;
-import com.marveliu.web.dao.repository.LogDao;
+import com.marveliu.web.dao.repository.LogRepository;
 import com.marveliu.web.service.LogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class LogServiceImpl extends BaseServiceImpl<Log, Long> implements LogSer
     private static final Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
 
     @Autowired
-    private LogDao logDao;
+    private LogRepository logDao;
 
     @Override
     public BaseDao<Log, Long> getDAO() {

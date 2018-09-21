@@ -1,7 +1,8 @@
 package com.marveliu.web.handler;
 
-import com.marveliu.common.utils.Result;
+import com.marveliu.common.common.page.Result;
 import com.marveliu.web.exception.UserNotExistException;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ import java.util.Map;
  * @Date 2018/7/18 9:02 PM
  **/
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 默认异常处理实现
@@ -30,7 +31,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public Result globalErrorHandler(Exception ex) {
-        logger.error(ex.toString());
+        log.error(ex.toString());
         return null;
     }
 

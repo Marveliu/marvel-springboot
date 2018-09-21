@@ -52,12 +52,35 @@ spring:
         hibernate:
               ddl-auto: update
 
+     redis:
+        # Redis数据库索引（默认为0）
+        database: 0
+        # Redis服务器地址
+        host: localhost
+        # Redis服务器连接端口
+        port: 6379
+        pool:
+          # 连接池最大连接数（使用负值表示没有限制）
+          #建议为业务期望QPS/一个连接的QPS,例如50000/1000=50
+          #一次命令时间(borrow|return resource+Jedis执行命令+网络延迟)的平均耗时约为1ms,一个连接的QPS大约是1000
+          max-active: 8
+          # 连接池最大阻塞等待时间（使用负值表示没有限制）
+          max-wait: -1
+          # 连接池中的最大空闲连接
+          #建议和最大连接数一致,这样做的好处是连接数从不减少,从而避免了连接池伸缩产生的性能开销。
+          max-idle: 8
+          # 连接池中的最小空闲连接
+          min-idle: 0
+        # 连接超时时间（毫秒）请求redis服务的超时时间,这里注意设置成0时取默认时间2000
+        # 建议不要为-1，连接池占满后无法获取连接时将在该时间内阻塞等待，超时后将抛出异常。
+        timeout: 2000
+
 
 server:
     port: ${PORT:8080}
 
 #日志
 logging:
-  config: classpath:log/logback.xml
+  config: classpath:log/logback-spring.xml
   path: ./logs
 

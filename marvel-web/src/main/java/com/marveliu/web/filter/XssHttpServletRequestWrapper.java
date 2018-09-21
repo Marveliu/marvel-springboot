@@ -2,6 +2,7 @@ package com.marveliu.web.filter;
 
 import com.marveliu.web.utils.HttpUtil;
 import com.marveliu.web.utils.JsoupUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ReadListener;
@@ -20,6 +21,7 @@ import java.nio.charset.Charset;
  * @Description:
  **/
 
+@Slf4j
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     HttpServletRequest orgRequest = null;
     private byte[] body;

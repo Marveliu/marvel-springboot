@@ -1,5 +1,6 @@
 package com.marveliu.web.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -13,6 +14,7 @@ import java.io.IOException;
  * @Description:
  **/
 
+@Slf4j
 public class JsoupUtil {
 
     /**

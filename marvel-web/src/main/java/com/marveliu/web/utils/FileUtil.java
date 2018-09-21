@@ -1,5 +1,6 @@
 package com.marveliu.web.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,9 +12,8 @@ import java.io.*;
  * @Description: 文件上传工具楼
  **/
 
+@Slf4j
 public class FileUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     private FileUtil() {
     }
@@ -31,7 +31,7 @@ public class FileUtil {
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
-        logger.debug("文件上传地址：" + targetFile.getAbsolutePath());
+        log.debug("文件上传地址：" + targetFile.getAbsolutePath());
         FileOutputStream out = new FileOutputStream(filePath + fileName);
         out.write(file);
         out.flush();

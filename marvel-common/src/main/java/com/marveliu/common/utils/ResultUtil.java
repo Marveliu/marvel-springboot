@@ -1,5 +1,6 @@
 package com.marveliu.common.utils;
 
+import com.marveliu.common.common.page.Result;
 import com.marveliu.common.constants.ResultCode;
 
 /**
