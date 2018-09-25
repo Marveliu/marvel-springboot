@@ -6,10 +6,7 @@ import com.marveliu.web.dao.entity.User;
 import com.marveliu.web.dao.repository.UserRepository;
 import com.marveliu.web.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -30,9 +27,14 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Resource
     private UserService userService;
 
+    /**
+     * 获取用户角色和权限
+     *
+     * @param principals
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        log.debug("权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User User = (User) principals.getPrimaryPrincipal();
         for (SysRole role : User.getRoleList()) {
@@ -54,23 +56,35 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
             throws AuthenticationException {
-        log.debug("MyShiroRealm.doGetAuthenticationInfo()");
-        // 获取用户的输入的账号.
-        String username = (String) token.getPrincipal();
-        System.out.println(token.getCredentials());
+
+        // 获取用户的输入的账号
+        String userName = (String) token.getPrincipal();
+        String password = new String((char[]) token.getCredentials());
+        log.info(String.format("用户:[%s]认证", userName));
+
+
         // 通过username从数据库中查找 User对象，如果找到，没找到.
-        // 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        User User = ((UserRepository) userService.getDAO()).findUserByName(username);
-        if (User == null) {
-            return null;
+        // todo: 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
+        User user = ((UserRepository) userService.getDAO()).findUserByName(userName);
+        if (user == null) {
+            throw new UnknownAccountException("用户名或密码错误！");
         }
+        if (!password.equals(user.getPassword())) {
+            throw new IncorrectCredentialsException("用户名或密码错误！");
+        }
+        // todo: 账户状态信息定义
+        if (user.getStatus().equals(2)) {
+            throw new LockedAccountException("账号已被锁定,请联系管理员！");
+        }
+
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 // 用户名
-                User,
+                user,
                 // 密码
-                User.getPassword(),
+                user.getPassword(),
                 // salt=username+salt
-                ByteSource.Util.bytes(User.getCredentialsSalt()),
+                ByteSource.Util.bytes(user.getCredentialsSalt()),
                 // realm name
                 getName()
         );

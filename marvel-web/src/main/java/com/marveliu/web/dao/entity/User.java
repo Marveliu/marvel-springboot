@@ -46,7 +46,7 @@ public class User extends AbstractModel<Integer> {
      * 用户状态
      * 0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
      */
-    private byte state;
+    private Integer status;
 
     /**
      * 立即从数据库中进行加载数据;
