@@ -11,76 +11,78 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+
+
 server:
-  port: 8080
-  tomcat:
-    uri-encoding: utf-8
+ port: 8080
+ thymeleaf:
+  cache: false
+  mode: LEGACYHTML5
+ tomcat:
+  uri-encoding: utf-8
 
 spring:
-    datasource:
-        driver-class-name: com.mysql.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
-        druid:
-          # 配置测试查询语句
-          validationQuery: SELECT 1 FROM DUAL
-          # 初始化大小，最小，最大
-          initialSize: 10
-          minIdle: 10
-          maxActive: 200
-          # 配置一个连接在池中最小生存的时间，单位是毫秒
-          minEvictableIdleTimeMillis: 180000
-          testOnBorrow: false
-          testWhileIdle: true
-          removeAbandoned: true
-          removeAbandonedTimeout: 1800
-          logAbandoned: true
-          # 打开PSCache，并且指定每个连接上PSCache的大小
-          poolPreparedStatements: true
-          maxOpenPreparedStatements: 100
-          # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-          filters: stat,wall,log4j
-          # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-          connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-        url: jdbc:mysql://127.0.0.1:3306/marvel_springboot?characterEncoding=utf-8&useSSL=false
-        username: root
-        password: root
+ datasource:
+  driver-class-name: com.mysql.jdbc.Driver
+  type: com.alibaba.druid.pool.DruidDataSource
 
-    jpa:
-        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-        database: MYSQL
-        show_sql: false
-        hibernate:
-              ddl-auto: update
+ druid:
+   # 配置测试查询语句
+   validationQuery: SELECT 1 FROM DUAL
+   # 初始化大小，最小，最大
+   initialSize: 10
+   minIdle: 10
+   maxActive: 200
+   # 配置一个连接在池中最小生存的时间，单位是毫秒
+   minEvictableIdleTimeMillis: 180000
+   testOnBorrow: false
+   testWhileIdle: true
+   removeAbandoned: true
+   removeAbandonedTimeout: 1800
+   logAbandoned: true
+   # 打开PSCache，并且指定每个连接上PSCache的大小
+   poolPreparedStatements: true
+   maxOpenPreparedStatements: 100
+   # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+   filters: stat,wall,log4j
+   # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+   connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    url: jdbc:mysql://127.0.0.1:3306/marvel_springboot?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
 
-     redis:
-        # Redis数据库索引（默认为0）
-        database: 0
-        # Redis服务器地址
-        host: localhost
-        # Redis服务器连接端口
-        port: 6379
-        pool:
-          # 连接池最大连接数（使用负值表示没有限制）
-          #建议为业务期望QPS/一个连接的QPS,例如50000/1000=50
-          #一次命令时间(borrow|return resource+Jedis执行命令+网络延迟)的平均耗时约为1ms,一个连接的QPS大约是1000
-          max-active: 8
-          # 连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-wait: -1
-          # 连接池中的最大空闲连接
-          #建议和最大连接数一致,这样做的好处是连接数从不减少,从而避免了连接池伸缩产生的性能开销。
-          max-idle: 8
-          # 连接池中的最小空闲连接
-          min-idle: 0
-        # 连接超时时间（毫秒）请求redis服务的超时时间,这里注意设置成0时取默认时间2000
-        # 建议不要为-1，连接池占满后无法获取连接时将在该时间内阻塞等待，超时后将抛出异常。
-        timeout: 2000
+ jpa:
+  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  database: MYSQL
+   show_sql: false
+   hibernate:
+   ddl-auto: update
 
-
-server:
-    port: ${PORT:8080}
-
+ redis:
+  # Redis数据库索引（默认为0）
+  database: 0
+  # Redis服务器地址
+  host: localhost
+  # Redis服务器连接端口
+  port: 6379
+   pool:
+   # 连接池最大连接数（使用负值表示没有限制）
+   # 建议为业务期望QPS/一个连接的QPS,例如50000/1000=50
+   # 一次命令时间(borrow|return resource+Jedis执行命令+网络延迟)的平均耗时约为1ms,一个连接的QPS大约是1000
+   max-active: 8
+   # 连接池最大阻塞等待时间（使用负值表示没有限制）
+   max-wait: -1
+   # 连接池中的最大空闲连接
+   # 建议和最大连接数一致,这样做的好处是连接数从不减少,从而避免了连接池伸缩产生的性能开销。
+   max-idle: 8
+   # 连接池中的最小空闲连接
+   min-idle: 0
+   # 连接超时时间（毫秒）请求redis服务的超时时间,这里注意设置成0时取默认时间2000
+   # 建议不要为-1，连接池占满后无法获取连接时将在该时间内阻塞等待，超时后将抛出异常。
+   timeout: 2000
+        
 #日志
 logging:
-  config: classpath:log/logback-spring.xml
-  path: ./logs
+ config: classpath:log/logback-spring.xml
+ path: ./logs
 

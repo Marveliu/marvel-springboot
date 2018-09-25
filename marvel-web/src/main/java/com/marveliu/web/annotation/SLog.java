@@ -12,6 +12,12 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 public @interface SLog {
+
+    /**
+     * 消息类型
+     *
+     * @return
+     */
     int type() default 1;
 
     /**
@@ -21,21 +27,8 @@ public @interface SLog {
      */
     String tag() default "系统通知";
 
-    /**
-     * 消息发送范围:
-     * 1. 所有用户
-     * 2. 本机构及下属用户
-     * 3. 本机构用户
-     * 4. 下属机构用户
-     * 5. 当前用户
-     *
-     * @return
-     */
-    int scope();
 
     /**
-     *
-     *
      * @return
      */
     String msg() default "";

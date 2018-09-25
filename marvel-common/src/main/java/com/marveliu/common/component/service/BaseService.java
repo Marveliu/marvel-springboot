@@ -59,7 +59,6 @@ public interface BaseService<T extends BaseModel<ID>, ID extends Serializable> {
      */
     T findById(ID id);
 
-
     /**
      * 查询全部
      *

@@ -25,7 +25,7 @@
 - rabbitMq
 - dubbo
 - quartz
-- queryDsl
+- [x] queryDsl
 
 ## features
 
@@ -33,6 +33,7 @@
 2. 全局异常处理以及状态码
 3. 操作日志
 4. 任务调度
+5. 动态数据源配置
 
 ## branches
 

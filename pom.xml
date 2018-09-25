@@ -30,6 +30,7 @@
         <jsoup.version>1.9.2</jsoup.version>
         <fastjson.version>1.2.41</fastjson.version>
         <lombok.version>1.16.14</lombok.version>
+        <shiro.version>1.4.0</shiro.version>
     </properties>
 
     <dependencyManagement>
@@ -94,6 +95,13 @@
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
+            </dependency>
+
+            <!--shiro-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
             </dependency>
 
         </dependencies>

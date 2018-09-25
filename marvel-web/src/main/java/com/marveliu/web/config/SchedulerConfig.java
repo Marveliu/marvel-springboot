@@ -30,6 +30,8 @@ public class SchedulerConfig {
     public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setQuartzProperties(quartzProperties());
+        // 一个配置文件中拿数据库地址
+        // factory.setDataSource();
         return factory;
     }
 

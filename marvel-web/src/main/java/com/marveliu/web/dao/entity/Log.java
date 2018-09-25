@@ -2,7 +2,6 @@ package com.marveliu.web.dao.entity;
 
 import com.marveliu.common.component.domain.AbstractModel;
 import lombok.Data;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.*;
 
