@@ -139,6 +139,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- shiro-redis -->
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>2.4.2.1-RELEASE</version>
+        </dependency>
+
     </dependencies>
 
 

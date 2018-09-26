@@ -20,11 +20,10 @@ public class User extends AbstractModel<Integer> {
     @GeneratedValue
     private Integer uid;
 
-    @Column(unique = true)
-
     /**
      * 帐号
      */
+    @Column(unique = true)
     private String username;
 
     /**
