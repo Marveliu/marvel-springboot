@@ -1,13 +1,18 @@
 package com.marveliu.web.controller;
 
+import com.marveliu.common.common.page.Result;
+import com.marveliu.common.utils.ResultUtil;
+import com.marveliu.web.annotation.SLog;
+import com.marveliu.web.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @Author: Marveliu
@@ -17,43 +22,32 @@ import java.util.Map;
 
 @Slf4j
 @Controller
+@RequestMapping("/home")
 public class HomeController {
 
-    @RequestMapping({"/", "/index"})
-    public String index() {
-        return "/index";
+    @GetMapping({"/", "/index"})
+    public Result index() {
+        return ResultUtil.success();
     }
 
-    @RequestMapping("/login")
-    public String login(HttpServletRequest request, Map<String, Object> map) throws Exception {
-        System.out.println("HomeController.login()");
-        // 登录失败从request中获取shiro处理的异常信息。
-        // shiroLoginFailure:就是shiro异常类的全类名.
-        String exception = (String) request.getAttribute("shiroLoginFailure");
-        System.out.println("exception=" + exception);
-        String msg = "";
-        if (exception != null) {
-            if (UnknownAccountException.class.getName().equals(exception)) {
-                System.out.println("UnknownAccountException -- > 账号不存在：");
-                msg = "UnknownAccountException -- > 账号不存在：";
-            } else if (IncorrectCredentialsException.class.getName().equals(exception)) {
-                System.out.println("IncorrectCredentialsException -- > 密码不正确：");
-                msg = "IncorrectCredentialsException -- > 密码不正确：";
-            } else if ("kaptchaValidateFailed".equals(exception)) {
-                System.out.println("kaptchaValidateFailed -- > 验证码错误");
-                msg = "kaptchaValidateFailed -- > 验证码错误";
-            } else {
-                msg = "else >> " + exception;
-                System.out.println("else -- >" + exception);
-            }
+    @SLog(msg = "用户登录")
+    @PostMapping("/login")
+    public Result login(@RequestParam String username, @RequestParam String password) throws Exception {
+        password = MD5Util.encrypt(username, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(token);
+            return ResultUtil.success();
+        } catch (UnknownAccountException e) {
+            return ResultUtil.error(e.getMessage());
+        } catch (IncorrectCredentialsException e) {
+            return ResultUtil.error(e.getMessage());
+        } catch (LockedAccountException e) {
+            return ResultUtil.error(e.getMessage());
+        } catch (AuthenticationException e) {
+            return ResultUtil.error("认证失败！");
         }
-        map.put("msg", msg);
-        // 此方法不处理登录成功,由shiro进行处理
-        return "/login";
     }
 
-    @RequestMapping("/403")
-    public String unauthorizedRole() {
-        return "403";
-    }
 }

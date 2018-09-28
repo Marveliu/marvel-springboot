@@ -2,6 +2,7 @@ package com.marveliu.web.dao.entity;
 
 import com.marveliu.common.component.domain.AbstractModel;
 import lombok.Data;
+import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 import java.util.List;
@@ -51,9 +52,10 @@ public class User extends AbstractModel<Integer> {
      * 立即从数据库中进行加载数据;
      * 一个用户具有多个角色
      */
+    @Target(SysRole.class)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "SysUserRole", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
-    private List<SysRole> roleList;
+    private List<SysRole> roles;
 
     @Override
     public Integer getId() {

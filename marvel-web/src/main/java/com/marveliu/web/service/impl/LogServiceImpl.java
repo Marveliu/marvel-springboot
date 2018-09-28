@@ -5,6 +5,7 @@ import com.marveliu.common.component.service.impl.BaseServiceImpl;
 import com.marveliu.web.dao.entity.Log;
 import com.marveliu.web.dao.repository.LogRepository;
 import com.marveliu.web.service.LogService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ import org.springframework.stereotype.Service;
  * @Description: 日志service
  **/
 
+@Slf4j
 @Service
 public class LogServiceImpl extends BaseServiceImpl<Log, Long> implements LogService {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
 
     @Autowired
     private LogRepository logDao;

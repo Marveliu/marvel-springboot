@@ -132,7 +132,6 @@ public class SLogUtil implements Runnable {
         Log log = new Log();
         log.setLog(elLog);
         log.setSrc(src);
-        log.setStatus(0);
         log.setType(sLog.type());
         log.setTag(sLog.tag());
         this.log(log, sLog.async());

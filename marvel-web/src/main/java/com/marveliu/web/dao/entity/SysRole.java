@@ -4,7 +4,6 @@ import com.marveliu.common.component.domain.AbstractModel;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -43,12 +42,12 @@ public class SysRole extends AbstractModel<Integer> {
     @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "permissionId")})
     private List<SysPermission> permissions;
 
-    //
+
     /**
      * 用户 - 角色关系定义
      * 一个角色对应多个用户
      */
     @ManyToMany
     @JoinTable(name = "SysUserRole", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "uid")})
-    private List<User> userInfos;
+    private List<User> users;
 }

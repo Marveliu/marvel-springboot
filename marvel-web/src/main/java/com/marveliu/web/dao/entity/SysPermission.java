@@ -2,6 +2,7 @@ package com.marveliu.web.dao.entity;
 
 import com.marveliu.common.component.domain.AbstractModel;
 import lombok.Data;
+import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 import java.util.List;
@@ -58,9 +59,9 @@ public class SysPermission extends AbstractModel<Integer> {
      */
     private Boolean available = Boolean.FALSE;
 
-    /**
-     * 关联角色
-     */
+    // /**
+    //  * 关联角色
+    //  */
     @ManyToMany
     @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<SysRole> roles;

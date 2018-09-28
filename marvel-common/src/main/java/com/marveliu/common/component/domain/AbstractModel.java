@@ -22,9 +22,9 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
     @Column(columnDefinition = "int default 0")
     private int creator = 0;
 
-    @Column(updatable = false, columnDefinition = "datetime(3) " +
+    @Column(updatable = false, columnDefinition = "TIMESTAMP " +
             "NOT NULL " +
-            "DEFAULT CURRENT_TIMESTAMP(3) " +
+            "DEFAULT CURRENT_TIMESTAMP " +
             "COMMENT '创建时间'")
     private Long createTime;
 
@@ -32,7 +32,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
     @Column(columnDefinition = "int default 0")
     private int updator = 0;
 
-    @Column(columnDefinition = "String " +
+    @Column(columnDefinition = "int " +
             "COMMENT '最近修改时间'")
     private Long operateTime;
 

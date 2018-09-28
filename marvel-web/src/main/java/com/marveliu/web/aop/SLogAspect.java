@@ -57,7 +57,7 @@ public class SLogAspect implements BeanFactoryAware {
     }
 
 
-    @Pointcut("execution(@cn.hyperchain.web.annotaion.SLog * *(..))")
+    @Pointcut("execution(@com.marveliu.web.annotation.SLog * *(..))")
     public void SLogAspect() {
     }
 

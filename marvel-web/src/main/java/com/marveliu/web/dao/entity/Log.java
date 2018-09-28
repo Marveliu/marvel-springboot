@@ -35,12 +35,6 @@ public class Log extends AbstractModel<Long> {
             "COMMENT '消息来源类'")
     private String src;
 
-    @Column(columnDefinition = "int(11) " +
-            "NOT NULL " +
-            "COMMENT '接受用户id'")
-    private Integer to;
-
-
     /***
      * 消息发送
      */
@@ -49,21 +43,6 @@ public class Log extends AbstractModel<Long> {
             "COMMENT '消息内容'")
     private String Log;
 
-    /**
-     * 阅读时间
-     */
-    @Column(updatable = false, columnDefinition = "datetime(3) " +
-            "COMMENT '创建时间'")
-    private Long readTime;
-
-    /**
-     * 消息状态
-     */
-    @Column(columnDefinition = "int(11) " +
-            "NOT NULL " +
-            "DEFAULT '0' " +
-            "COMMENT '消息状态 是否阅读 0 未读 1 已读'")
-    private Integer status;
 
     public Log() {
 

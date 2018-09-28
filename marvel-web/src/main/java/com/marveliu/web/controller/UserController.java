@@ -1,8 +1,12 @@
 package com.marveliu.web.controller;
 
+import com.marveliu.common.common.page.Result;
+import com.marveliu.common.utils.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,35 +21,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
     /**
-     * 用户查询.
+     * 用户查询
      *
      * @return
      */
-    @RequestMapping("/userList")
+    @RequestMapping("/list")
     @RequiresPermissions("user:view")
-    public String user() {
-        return "user";
+    public Result user() {
+        try {
+            return ResultUtil.success();
+        } catch (Exception e) {
+            return ResultUtil.error();
+        }
     }
 
     /**
-     * 用户添加;
+     * 用户添加
      *
      * @return
      */
-    @RequestMapping("/userAdd")
+    @PutMapping("/add")
     @RequiresPermissions("user:add")
-    public String userAdd() {
-        return "userAdd";
+    public Result userAdd() {
+        try {
+            return ResultUtil.success();
+        } catch (Exception e) {
+            return ResultUtil.error();
+        }
     }
 
     /**
-     * 用户删除;
+     * 用户删除
      *
      * @return
      */
-    @RequestMapping("/userDel")
+    @GetMapping("/del")
     @RequiresPermissions("user:del")
-    public String userDel() {
-        return "userDel";
+    public Result userDel() {
+        try {
+            return ResultUtil.success();
+        } catch (Exception e) {
+            return ResultUtil.error();
+        }
     }
 }

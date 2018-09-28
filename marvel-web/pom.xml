@@ -25,12 +25,6 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- Exclude Spring Boot's Default Logging -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -88,7 +82,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -162,54 +155,43 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.4.RELEASE</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <mainClass>com.marveliu.web.WebApplication</mainClass>
-                    <jvmArguments>-Dfile.encoding=UTF-8 -Xdebug
-                        -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888
-                    </jvmArguments>
-                    <executable>true</executable>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.marveliu.web.WebApplication</mainClass>
-                    <jvmArguments>-Dfile.encoding=UTF-8 -Xdebug
-                        -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888
-                    </jvmArguments>
-                    <executable>true</executable>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+    </plugin>
 
-    <!--<build>-->
-    <!--<plugins>-->
-    <!--<plugin>-->
-    <!--<groupId>org.springframework.boot</groupId>-->
-    <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--</plugin>-->
-    <!--</plugins>-->
-    <!--</build>-->
-
-
+    <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>springloaded</artifactId>
+                <version>1.2.4.RELEASE</version>
+            </dependency>
+        </dependencies>
+        <configuration>
+            <mainClass>com.marveliu.web.WebApplication</mainClass>
+            <jvmArguments>-Dfile.encoding=UTF-8 -Xdebug
+                -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888
+            </jvmArguments>
+            <executable>true</executable>
+            <fork>true</fork>
+        </configuration>
+    </plugin>
+    <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+            <mainClass>com.marveliu.web.WebApplication</mainClass>
+            <jvmArguments>-Dfile.encoding=UTF-8 -Xdebug
+                -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8888
+            </jvmArguments>
+            <executable>true</executable>
+            <fork>true</fork>
+        </configuration>
+    </plugin>
 </project>

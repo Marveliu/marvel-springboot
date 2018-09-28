@@ -1,20 +1,8 @@
-# ===================================================================
-# Spring Boot configuration.
-#
-# This configuration will be overriden by the Spring profile you use,
-# for example application-dev.yml if you use the "dev" profile.
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
-
-
 server:
  port: 8080
+ compression:
+  enabled: true
+  mime-types: application/json,application/xml,text/html,text/xml,text/plain
  thymeleaf:
   cache: false
   mode: LEGACYHTML5
@@ -23,10 +11,8 @@ server:
 
 spring:
  datasource:
-  driver-class-name: com.mysql.jdbc.Driver
-  type: com.alibaba.druid.pool.DruidDataSource
-
- druid:
+   driver-class-name: com.mysql.jdbc.Driver
+   type: com.alibaba.druid.pool.DruidDataSource
    # 配置测试查询语句
    validationQuery: SELECT 1 FROM DUAL
    # 初始化大小，最小，最大
@@ -47,25 +33,46 @@ spring:
    filters: stat,wall,log4j
    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    url: jdbc:mysql://127.0.0.1:3306/marvel_springboot?characterEncoding=utf-8&useSSL=false
-    username: root
-    password: root
-
+   url: jdbc:mysql://127.0.0.1:3306/marvel_springboot?characterEncoding=utf-8&useSSL=false
+   username: root
+   password: root
  jpa:
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   database: MYSQL
-   show_sql: false
-   hibernate:
-   ddl-auto: update
+  show_sql: false
+  hibernate:
+   ddl-auto: create
+  properties:
+   hibernate.format_sql: true
+ quartz:
+   job-store-type: jdbc
+   properties:
+    org:
+     quartz:
+      scheduler:
+       instanceName: clusteredScheduler
+       instanceId: AUTO
+      jobStore:
+       class: org.quartz.impl.jdbcjobstore.JobStoreTX
+       driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+       useProperties: false
+       tablePrefix: SYS_QRTZ_
+       isClustered: true
+       clusterCheckinInterval: 10000
+      threadPool:
+       class: org.quartz.simpl.SimpleThreadPool
+       threadCount: 10
+       threadPriority: 5
+       threadsInheritContextClassLoaderOfInitializingThread: true
 
- redis:
+redis:
   # Redis数据库索引（默认为0）
   database: 0
   # Redis服务器地址
   host: localhost
   # Redis服务器连接端口
   port: 6379
-   pool:
+  pool:
    # 连接池最大连接数（使用负值表示没有限制）
    # 建议为业务期望QPS/一个连接的QPS,例如50000/1000=50
    # 一次命令时间(borrow|return resource+Jedis执行命令+网络延迟)的平均耗时约为1ms,一个连接的QPS大约是1000
@@ -80,9 +87,10 @@ spring:
    # 连接超时时间（毫秒）请求redis服务的超时时间,这里注意设置成0时取默认时间2000
    # 建议不要为-1，连接池占满后无法获取连接时将在该时间内阻塞等待，超时后将抛出异常。
    timeout: 2000
-        
+
 #日志
 logging:
- config: classpath:log/logback-spring.xml
+ config: classpath:logback-spring.xml
  path: ./logs
+
 

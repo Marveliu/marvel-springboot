@@ -1,12 +1,12 @@
 package com.marveliu.web.service.impl;
 
-import com.marveliu.web.quartz.BaseJob;
 import com.marveliu.web.service.SchedulerService;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,19 +17,19 @@ import java.util.List;
  * @Description:
  **/
 
+@Slf4j
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
 
     private static final Logger logger = LoggerFactory.getLogger(SchedulerServiceImpl.class);
 
     @Autowired
-    @Qualifier("Scheduler")
     private Scheduler scheduler;
 
 
-    public static BaseJob getClass(String classname) throws Exception {
+    public static QuartzJobBean getClass(String classname) throws Exception {
         Class<?> class1 = Class.forName(classname);
-        return (BaseJob) class1.newInstance();
+        return (QuartzJobBean) class1.newInstance();
     }
 
     @Override

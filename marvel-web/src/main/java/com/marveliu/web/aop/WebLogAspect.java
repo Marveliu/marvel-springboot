@@ -25,11 +25,11 @@ public class WebLogAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
-    private static final String searchString = "cn.hyperchain.web.web";
+    private static final String searchString = "com.marveliu.web";
 
     ThreadLocal<StringBuilder> logs = new ThreadLocal<>();
 
-    @Pointcut("execution(public * cn.hyperchain.web.web.controller..*(..)) && !execution(public * cn.hyperchain.web.web.controller.SummaryController.*(..))")
+    @Pointcut("execution(public * com.marveliu.web.controller..*(..))")
     public void webLog() {
     }
 
