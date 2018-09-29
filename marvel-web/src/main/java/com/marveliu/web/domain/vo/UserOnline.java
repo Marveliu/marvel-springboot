@@ -1,4 +1,4 @@
-package com.marveliu.web.bean;
+package com.marveliu.web.domain.vo;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

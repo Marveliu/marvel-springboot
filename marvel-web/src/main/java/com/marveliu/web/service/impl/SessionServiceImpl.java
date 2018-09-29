@@ -1,6 +1,6 @@
 package com.marveliu.web.service.impl;
 
-import com.marveliu.web.bean.UserOnline;
+import com.marveliu.web.domain.vo.UserOnline;
 import com.marveliu.web.dao.entity.User;
 import com.marveliu.web.service.SessionService;
 import com.marveliu.web.utils.DateUtil;

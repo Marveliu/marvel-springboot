@@ -57,25 +57,12 @@ public class XssFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-
-        // String body = getPostBody(req);
-        // if (!StringUtils.isEmpty(body)) {
-        //     for (String s : chars) {
-        //         if (body.contains(s)) {
-        //             log.error(String.format("请求含有非法字符:%s", s));
-        //             resp.setStatus(401);
-        //             return;
-        //         }
-        //     }
-        // }
-
         if (handleExcludeURL(req, resp)) {
             filterChain.doFilter(request, response);
             return;
         }
-
-
         XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request, IS_INCLUDE_RICH_TEXT);
+
         String body = new String(xssRequest.getBody(), "UTF-8");
         if (!StringUtils.isBlank(body)) {
             for (String s : chars) {
@@ -86,6 +73,7 @@ public class XssFilter implements Filter {
                 }
             }
         }
+
         filterChain.doFilter(xssRequest, response);
     }
 

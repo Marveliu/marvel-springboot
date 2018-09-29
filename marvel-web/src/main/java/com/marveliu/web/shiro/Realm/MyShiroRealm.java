@@ -1,4 +1,4 @@
-package com.marveliu.web.shiro;
+package com.marveliu.web.shiro.Realm;
 
 import com.marveliu.web.dao.entity.SysPermission;
 import com.marveliu.web.dao.entity.SysRole;
@@ -76,7 +76,6 @@ public class MyShiroRealm extends AuthorizingRealm {
         if (user.getStatus().equals(2)) {
             throw new LockedAccountException("账号已被锁定,请联系管理员！");
         }
-
 
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 // 用户名

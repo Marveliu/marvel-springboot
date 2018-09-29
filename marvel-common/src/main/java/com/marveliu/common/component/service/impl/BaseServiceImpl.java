@@ -6,6 +6,7 @@ import com.marveliu.common.component.dao.BaseDao;
 import com.marveliu.common.component.domain.AbstractModel;
 import com.marveliu.common.component.domain.BaseModel;
 import com.marveliu.common.component.service.BaseService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -30,9 +31,9 @@ import java.util.*;
  * @Description: 基于Jpa进行Crud的封装
  **/
 @SuppressWarnings("unchecked")
+@Slf4j
 public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serializable> implements BaseService<T, ID> {
 
-    private static Logger logger = LoggerFactory.getLogger(BaseServiceImpl.class);
 
     public abstract BaseDao<T, ID> getDAO();
 
@@ -244,7 +245,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
                         in.value(item);
                     }
                 } catch (Exception e) {
-                    logger.error("error", e);
+                    log.error("error", e);
                 }
                 return in;
             }

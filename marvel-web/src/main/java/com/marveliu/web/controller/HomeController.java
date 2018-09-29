@@ -9,10 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: Marveliu
@@ -21,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  **/
 
 @Slf4j
-@Controller
-@RequestMapping("/home")
+@RestController
+@RequestMapping("")
 public class HomeController {
 
     @GetMapping({"/", "/index"})

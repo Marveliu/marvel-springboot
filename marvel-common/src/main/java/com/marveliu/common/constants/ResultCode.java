@@ -7,8 +7,8 @@ package com.marveliu.common.constants;
 
 public enum ResultCode {
 
-    ERROR(-1, "ERROR"),
-    SUCCESS(0, "SUCCESS");
+    ERROR(-1, "error"),
+    SUCCESS(0, "success");
 
     private int code;
     private String msg;

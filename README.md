@@ -25,7 +25,7 @@
 - rabbitMq
 - dubbo
 - quartz
-- [x] queryDsl
+- queryDsl
 
 ## features
 
@@ -49,6 +49,7 @@
 ## Reference
 
 1. [Druid连接池以及Druid监控](https://www.jianshu.com/p/139405d267d3)
+2. [QueryDsl](https://www.jianshu.com/p/99a5ec5c3bd5)
 
 ## Contribute
 

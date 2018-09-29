@@ -1,7 +1,6 @@
 package com.marveliu.web.service;
 
-import com.marveliu.web.bean.UserOnline;
-import com.marveliu.web.dao.entity.User;
+import com.marveliu.web.domain.vo.UserOnline;
 
 import java.util.List;
 

@@ -1,8 +1,11 @@
 package com.marveliu.web.handler;
 
 import com.marveliu.common.common.page.Result;
+import com.marveliu.common.utils.ResultUtil;
+import com.marveliu.web.exception.UnauthorizedException;
 import com.marveliu.web.exception.UserNotExistException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.ShiroException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,4 +51,24 @@ public class GlobalExceptionHandler {
         map.put("message", e.getMessage());
         return map;
     }
+
+    /**
+     * 捕捉shiro的异常
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ShiroException.class)
+    public Result handle401(ShiroException e) {
+        return ResultUtil.error("no permission");
+    }
+
+    /**
+     * 捕捉UnauthorizedException
+     */
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnauthorizedException.class)
+    public Result handle401() {
+        return ResultUtil.error("no permission");
+    }
+
+
 }
