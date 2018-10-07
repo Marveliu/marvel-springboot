@@ -75,3 +75,5 @@ hs_err_pid*
 
 /.idea/
 /logs/
+/marvel-springboot/
+/marvelUpload/
