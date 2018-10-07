@@ -1,6 +1,6 @@
 package com.marveliu.web.service;
 
-import com.marveliu.common.component.service.BaseService;
+import com.marveliu.web.component.service.BaseService;
 
 import com.marveliu.web.dao.entity.User;
 

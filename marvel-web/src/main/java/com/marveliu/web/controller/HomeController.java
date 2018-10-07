@@ -1,14 +1,13 @@
 package com.marveliu.web.controller;
 
-import com.marveliu.common.common.page.Result;
-import com.marveliu.common.utils.ResultUtil;
 import com.marveliu.web.annotation.SLog;
-import com.marveliu.web.utils.MD5Util;
+import com.marveliu.web.component.page.Result;
+import com.marveliu.web.util.MD5Util;
+import com.marveliu.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**

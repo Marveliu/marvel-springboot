@@ -1,10 +1,8 @@
 package com.marveliu.web.dao.repository;
 
-import com.marveliu.common.component.dao.BaseDao;
+import com.marveliu.web.component.dao.BaseDao;
 import com.marveliu.web.dao.entity.User;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @Author: Marveliu

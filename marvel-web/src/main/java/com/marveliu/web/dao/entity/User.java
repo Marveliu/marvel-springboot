@@ -1,6 +1,6 @@
 package com.marveliu.web.dao.entity;
 
-import com.marveliu.common.component.domain.AbstractModel;
+import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
 import org.hibernate.annotations.Target;
 

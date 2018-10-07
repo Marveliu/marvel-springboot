@@ -1,7 +1,7 @@
 package com.marveliu.web.handler;
 
-import com.marveliu.common.common.page.Result;
-import com.marveliu.common.utils.ResultUtil;
+import com.marveliu.web.component.page.Result;
+import com.marveliu.web.util.ResultUtil;
 import com.marveliu.web.exception.UnauthorizedException;
 import com.marveliu.web.exception.UserNotExistException;
 import lombok.extern.slf4j.Slf4j;

@@ -4,8 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.marveliu.web.domain.vo.Message;
 import com.marveliu.web.service.AccountService;
 import com.marveliu.web.shiro.token.JwtToken;
-import com.marveliu.web.utils.HttpUtil;
-import com.marveliu.web.utils.IpUtil;
+import com.marveliu.web.util.HttpUtil;
+import com.marveliu.web.util.IpUtil;
+import com.marveliu.web.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -66,7 +67,7 @@ public class JwtFilter extends MPathMatchingFilter {
                         String roles = accountService.loadAccountRole(appId);
                         //seconds为单位,10 hours
                         long refreshPeriodTime = 36000L;
-                        String newJwt = JsonWebTokenUtil.issueJWT(UUID.randomUUID().toString(), appId,
+                        String newJwt = JwtUtil.issueJWT(UUID.randomUUID().toString(), appId,
                                 "token-server", refreshPeriodTime >> 1, roles, null, SignatureAlgorithm.HS512);
                         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
                         redisTemplate.opsForValue().set("JWT-SESSION-" + appId, newJwt, refreshPeriodTime, TimeUnit.SECONDS);

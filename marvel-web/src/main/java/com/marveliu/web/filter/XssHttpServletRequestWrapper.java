@@ -1,7 +1,7 @@
 package com.marveliu.web.filter;
 
-import com.marveliu.web.utils.HttpUtil;
-import com.marveliu.web.utils.JsoupUtil;
+import com.marveliu.web.util.HttpUtil;
+import com.marveliu.web.util.JsoupUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,8 +1,10 @@
 package com.marveliu.web.config;
 
-import com.marveliu.web.constants.Config;
+import com.marveliu.web.domain.vo.SysConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +22,18 @@ import java.io.FileNotFoundException;
  * @Description:
  **/
 
+@Slf4j
 @Configuration
 public class UploadConfig extends WebMvcConfigurerAdapter {
 
-    private static final Logger logger = LoggerFactory.getLogger(UploadConfig.class);
+    @Autowired
+    private SysConfig sysConfig;
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         // 设置暂存目录
-        String location = System.getProperty("user.dir") + "/" + Config.AppName + "/tmp";
+        String location = System.getProperty("user.dir") + "/" + sysConfig.getAppName() + "/tmp";
         File tmpFile = new File(location);
         if (!tmpFile.exists()) {
             tmpFile.mkdirs();
@@ -47,14 +51,14 @@ public class UploadConfig extends WebMvcConfigurerAdapter {
         File path = null;
         try {
             path = new File(ResourceUtils.getURL("classpath:").getPath());
-            logger.debug("路径: " + path);
-            String gitPath = path.getParentFile().getParentFile().getParent() + Config.AppUploadFolder;
-            logger.debug("上传外部资源路径：" + gitPath);
-            registry.addResourceHandler(Config.AppUploadBase + "**").addResourceLocations(ResourceUtils.FILE_URL_PREFIX + gitPath);
+            log.debug("路径: " + path);
+            String gitPath = path.getParentFile().getParentFile().getParent() + sysConfig.getUploadPath();
+            log.debug("上传外部资源路径：" + gitPath);
+            registry.addResourceHandler(sysConfig.getUploadBase() + "**").addResourceLocations(ResourceUtils.FILE_URL_PREFIX + gitPath);
             registry.addResourceHandler("/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX + "/static/");
             super.addResourceHandlers(registry);
         } catch (FileNotFoundException e) {
-            logger.error("映射外部资源文件出错", e);
+            log.error("映射外部资源文件出错", e);
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.marveliu.web.exception;
 
-import com.marveliu.common.exceptions.BaseExcetion;
-
 /**
  * @Author: Marveliu
  * @Date: 2018/9/21 下午3:07

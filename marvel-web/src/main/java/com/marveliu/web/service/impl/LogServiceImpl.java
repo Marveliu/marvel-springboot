@@ -1,7 +1,7 @@
 package com.marveliu.web.service.impl;
 
-import com.marveliu.common.component.dao.BaseDao;
-import com.marveliu.common.component.service.impl.BaseServiceImpl;
+import com.marveliu.web.component.dao.BaseDao;
+import com.marveliu.web.component.service.impl.BaseServiceImpl;
 import com.marveliu.web.dao.entity.Log;
 import com.marveliu.web.dao.repository.LogRepository;
 import com.marveliu.web.service.LogService;

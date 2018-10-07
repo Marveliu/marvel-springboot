@@ -6,6 +6,7 @@
 
 - [Background](#background)
 - [Features](#features)
+- [Usages](#usages)
 - [Branches](#branches)
 - [Maintainers](#maintainers)
 - [Contribute](#contribute)
@@ -34,6 +35,11 @@
 3. 操作日志
 4. 任务调度
 5. 动态数据源配置
+
+## usages
+
+1. 启动redis:redis-server
+2. 生成Qclass:maven package
 
 ## branches
 

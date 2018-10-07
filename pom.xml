@@ -7,9 +7,9 @@
     <groupId>com.marveliu</groupId>
     <artifactId>marvel-springboot</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <modules>
-        <module>marvel-common</module>
         <module>marvel-web</module>
     </modules>
 

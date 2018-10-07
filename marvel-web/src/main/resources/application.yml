@@ -90,4 +90,17 @@ logging:
  config: classpath:logback-spring.xml
  path: ./logs
 
+#系统参数
+marvel:
+ app:
+  name: marvel-springboot
+  upload:
+    path: marvelUpload/
+    base: uploads/
+  author:
+    name: marveliu
+    email: luckylsn9610@gmail.com
+
+
+
 

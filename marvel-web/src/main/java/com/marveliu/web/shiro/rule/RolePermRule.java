@@ -1,6 +1,6 @@
 package com.marveliu.web.shiro.rule;
 
-import com.marveliu.web.utils.JwtUtil;
+import com.marveliu.web.util.JwtUtil;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 

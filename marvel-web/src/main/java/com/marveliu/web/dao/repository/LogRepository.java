@@ -1,6 +1,6 @@
 package com.marveliu.web.dao.repository;
 
-import com.marveliu.common.component.dao.BaseDao;
+import com.marveliu.web.component.dao.BaseDao;
 import com.marveliu.web.dao.entity.Log;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

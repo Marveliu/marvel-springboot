@@ -1,8 +1,7 @@
 package com.marveliu.web.aop;
 
 import com.marveliu.web.annotation.SLog;
-import com.marveliu.web.utils.AsyncUtil;
-import com.marveliu.web.utils.SLogUtil;
+import com.marveliu.web.util.SLogUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -26,9 +25,6 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author Marveliu

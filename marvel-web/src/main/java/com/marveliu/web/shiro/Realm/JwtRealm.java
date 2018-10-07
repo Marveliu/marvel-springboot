@@ -1,7 +1,7 @@
 package com.marveliu.web.shiro.Realm;
 
 import com.marveliu.web.shiro.token.JwtToken;
-import com.marveliu.web.utils.JwtUtil;
+import com.marveliu.web.util.JwtUtil;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;

@@ -1,12 +1,11 @@
 package com.marveliu.web.controller;
 
-import com.marveliu.common.common.page.Result;
-import com.marveliu.common.utils.ResultUtil;
-import com.marveliu.web.constants.Config;
-import com.marveliu.web.utils.FileUtil;
+import com.marveliu.web.component.page.Result;
+import com.marveliu.web.util.ResultUtil;
+import com.marveliu.web.domain.vo.SysConfig;
+import com.marveliu.web.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +24,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
+
+    @Autowired
+    private SysConfig sysConfig;
 
     /**
      * 用户头像上传
@@ -45,7 +47,7 @@ public class UploadController {
             // 上传文件名
             String newFileName = UUID.randomUUID() + suffixName;
             log.debug("转换后的文件名：" + newFileName);
-            FileUtil.uploadFile(file.getBytes(), Config.AppUploadPath, newFileName);
+            FileUtil.uploadFile(file.getBytes(), sysConfig.getUploadPath(), newFileName);
             return ResultUtil.success();
         } catch (Exception e) {
             log.error("上传用户头像失败", e);

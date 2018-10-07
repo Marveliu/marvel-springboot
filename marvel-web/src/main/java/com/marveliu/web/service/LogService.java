@@ -1,7 +1,7 @@
 package com.marveliu.web.service;
 
-import com.marveliu.common.component.dao.BaseDao;
-import com.marveliu.common.component.service.BaseService;
+import com.marveliu.web.component.dao.BaseDao;
+import com.marveliu.web.component.service.BaseService;
 import com.marveliu.web.dao.entity.Log;
 
 /**

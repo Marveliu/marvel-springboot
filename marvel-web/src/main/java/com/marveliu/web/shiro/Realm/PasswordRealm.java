@@ -3,7 +3,7 @@ package com.marveliu.web.shiro.Realm;
 
 import com.marveliu.web.shiro.provider.AccountProvider;
 import com.marveliu.web.shiro.token.PasswordToken;
-import com.marveliu.web.utils.MD5Util;
+import com.marveliu.web.util.MD5Util;
 import com.marveliu.web.domain.vo.Account;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

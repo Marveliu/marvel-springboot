@@ -1,7 +1,7 @@
 package com.marveliu.web.shiro.mathcer;
 
 import com.marveliu.web.domain.vo.JwtAccount;
-import com.marveliu.web.utils.JwtUtil;
+import com.marveliu.web.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
