@@ -32,6 +32,7 @@ public class ShiroConfig {
     }
 
     @Bean
+    @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public SecurityManager securityManager(RealmManager realmManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(new AModularRealmAuthenticator());

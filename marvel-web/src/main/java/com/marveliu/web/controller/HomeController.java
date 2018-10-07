@@ -3,7 +3,6 @@ package com.marveliu.web.controller;
 import com.marveliu.web.annotation.SLog;
 import com.marveliu.web.component.page.Result;
 import com.marveliu.web.util.MD5Util;
-import com.marveliu.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -23,7 +22,7 @@ public class HomeController {
 
     @GetMapping({"/", "/index"})
     public Result index() {
-        return ResultUtil.success();
+        return Result.oK();
     }
 
     @SLog(msg = "用户登录")
@@ -34,15 +33,15 @@ public class HomeController {
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-            return ResultUtil.success();
+            return Result.oK();
         } catch (UnknownAccountException e) {
-            return ResultUtil.error(e.getMessage());
+            return Result.error();
         } catch (IncorrectCredentialsException e) {
-            return ResultUtil.error(e.getMessage());
+            return Result.error().message(e.getMessage());
         } catch (LockedAccountException e) {
-            return ResultUtil.error(e.getMessage());
+            return Result.error().message(e.getMessage());
         } catch (AuthenticationException e) {
-            return ResultUtil.error("认证失败！");
+            return Result.error().message("认证失败！");
         }
     }
 

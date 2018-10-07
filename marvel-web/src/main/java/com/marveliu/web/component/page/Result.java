@@ -1,5 +1,9 @@
 package com.marveliu.web.component.page;
 
+import com.marveliu.web.component.constant.ResultCode;
+import lombok.Data;
+
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,73 +12,108 @@ import java.util.Map;
  * @Date 2018/7/18 9:05 PM
  **/
 
-public class Result<T> {
+@Data
+public class Result {
 
     /**
-     * 状态码
+     * 消息头meta 存放状态信息 code message
      */
-    private int code;
+    private Map<String, Object> meta = new HashMap<String, Object>();
 
     /**
-     * 信息
+     * 消息内容  存储实体交互数据
      */
-    private String msg;
+    private Map<String, Object> data = new HashMap<String, Object>();
+
+    public Result addMeta(String key, Object object) {
+        this.meta.put(key, object);
+        return this;
+    }
+
+    public Result addData(String key, Object object) {
+        this.data.put(key, object);
+        return this;
+    }
 
     /**
-     * 数据
+     * 默认成功返回值
+     *
+     * @return
      */
-    private Object data;
-
-    public int getCode() {
-        return code;
+    public static Result oK() {
+        return new Result().ok(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg());
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    /**
+     * 返回状态码
+     * o
+     *
+     * @param code
+     * @return
+     */
+    public static Result oK(ResultCode code) {
+        return new Result().ok(code.getCode(), code.getMsg());
     }
 
-    public String getMsg() {
-        return msg;
+    /**
+     * 默认失败返回值
+     *
+     * @return
+     */
+    public static Result error() {
+        return new Result().error(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg());
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    /**
+     * 返回状态码
+     *
+     * @param code
+     * @return
+     */
+    public static Result error(ResultCode code) {
+        return new Result().error(code.getCode(), code.getMsg());
     }
 
-    public Object getData() {
-        return data;
+    /**
+     * 统一使用resultCode
+     *
+     * @param statusCode
+     * @param statusMsg
+     * @return
+     */
+    private Result ok(int statusCode, String statusMsg) {
+        this.addMeta("success", Boolean.TRUE);
+        this.addMeta("code", statusCode);
+        this.addMeta("msg", statusMsg);
+        this.addMeta("timestamp", new Timestamp(System.currentTimeMillis()));
+        return this;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    /**
+     * 统一使用resultCode
+     *
+     * @param statusCode
+     * @param statusMsg
+     * @return
+     */
+    private Result error(int statusCode, String statusMsg) {
+        this.addMeta("success", Boolean.FALSE);
+        this.addMeta("code", statusCode);
+        this.addMeta("msg", statusMsg);
+        this.addMeta("timestamp", new Timestamp(System.currentTimeMillis()));
+        return this;
     }
 
-    public Result() {
+    /**
+     * 自定义message
+     *
+     * @param statusMsg
+     * @return
+     */
+    public Result message(String statusMsg) {
+        this.addMeta("msg", statusMsg);
+        return this;
     }
 
-    public Result(int code) {
-        this.code = code;
-    }
 
-    public Result(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
-
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<String, Object>();
-        result.put("code", code);
-        result.put("msg", msg);
-        result.put("data", data);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                ", data=" + data +
-                '}';
-    }
 }

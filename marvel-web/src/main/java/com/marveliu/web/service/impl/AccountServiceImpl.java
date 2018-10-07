@@ -1,6 +1,7 @@
 package com.marveliu.web.service.impl;
 
-import com.marveliu.web.dao.entity.User;
+import com.marveliu.web.domain.bo.AuthUser;
+import com.marveliu.web.domain.mapper.UserMapper;
 import com.marveliu.web.domain.vo.Account;
 import com.marveliu.web.service.AccountService;
 import com.marveliu.web.service.UserService;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private UserService userService;
 
     @Override
@@ -30,8 +34,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean registerAccount(User account) {
-        return false;
+    public boolean registerAccount(AuthUser account) {
+        // 给新用户授权访客角色
+        userService.authorityUserRole(account.getUid(), 103);
+        // 插入用户信息
+        return userService.save(userMapper.from(account)) == null ? Boolean.TRUE : Boolean.FALSE;
     }
 
     @Override

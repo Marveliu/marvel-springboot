@@ -1,7 +1,6 @@
 package com.marveliu.web.controller;
 
 import com.marveliu.web.component.page.Result;
-import com.marveliu.web.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +28,9 @@ public class UserController {
     @RequiresPermissions("user:view")
     public Result user() {
         try {
-            return ResultUtil.success();
+            return Result.oK();
         } catch (Exception e) {
-            return ResultUtil.error();
+            return Result.error();
         }
     }
 
@@ -44,9 +43,9 @@ public class UserController {
     @RequiresPermissions("user:add")
     public Result userAdd() {
         try {
-            return ResultUtil.success();
+            return Result.oK();
         } catch (Exception e) {
-            return ResultUtil.error();
+            return Result.error();
         }
     }
 
@@ -59,9 +58,9 @@ public class UserController {
     @RequiresPermissions("user:del")
     public Result userDel() {
         try {
-            return ResultUtil.success();
+            return Result.oK();
         } catch (Exception e) {
-            return ResultUtil.error();
+            return Result.error();
         }
     }
 }

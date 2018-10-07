@@ -1,6 +1,6 @@
 package com.marveliu.web.service;
 
-import com.marveliu.web.dao.entity.User;
+import com.marveliu.web.domain.bo.AuthUser;
 import com.marveliu.web.domain.vo.Account;
 
 /**
@@ -15,7 +15,7 @@ public interface AccountService {
 
     boolean isAccountExistByUid(String uid);
 
-    boolean registerAccount(User account);
+    boolean registerAccount(AuthUser account);
 
     String loadAccountRole(String appId);
 }

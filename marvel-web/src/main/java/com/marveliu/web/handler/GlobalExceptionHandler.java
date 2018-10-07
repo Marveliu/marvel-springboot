@@ -1,7 +1,6 @@
 package com.marveliu.web.handler;
 
 import com.marveliu.web.component.page.Result;
-import com.marveliu.web.util.ResultUtil;
 import com.marveliu.web.exception.UnauthorizedException;
 import com.marveliu.web.exception.UserNotExistException;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +57,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ShiroException.class)
     public Result handle401(ShiroException e) {
-        return ResultUtil.error("no permission");
+        return Result.error().message("no permission");
     }
 
     /**
@@ -67,7 +66,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
     public Result handle401() {
-        return ResultUtil.error("no permission");
+        return Result.error().message("no permission");
     }
 
 

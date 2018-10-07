@@ -1,7 +1,6 @@
 package com.marveliu.web.controller;
 
 import com.marveliu.web.component.page.Result;
-import com.marveliu.web.util.ResultUtil;
 import com.marveliu.web.domain.vo.SysConfig;
 import com.marveliu.web.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -48,10 +47,10 @@ public class UploadController {
             String newFileName = UUID.randomUUID() + suffixName;
             log.debug("转换后的文件名：" + newFileName);
             FileUtil.uploadFile(file.getBytes(), sysConfig.getUploadPath(), newFileName);
-            return ResultUtil.success();
+            return Result.oK();
         } catch (Exception e) {
             log.error("上传用户头像失败", e);
         }
-        return ResultUtil.error("用户头像上传失败");
+        return Result.error().message("用户头像上传失败");
     }
 }

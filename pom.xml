@@ -33,6 +33,7 @@
         <shiro.version>1.4.0</shiro.version>
         <jjwt.version>0.9.0</jjwt.version>
         <querydsl.version>4.1.4</querydsl.version>
+        <org.mapstruct.version>1.2.0.CR1</org.mapstruct.version>
     </properties>
 
     <repositories>

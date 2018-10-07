@@ -56,6 +56,7 @@
 
 1. [Druid连接池以及Druid监控](https://www.jianshu.com/p/139405d267d3)
 2. [QueryDsl](https://www.jianshu.com/p/99a5ec5c3bd5)
+3. [基于springboot2+ shiro+jwt的真正rest api资源无状态认证权限管理框架](https://gitee.com/tomsun28/bootshiro)
 
 ## Contribute
 
