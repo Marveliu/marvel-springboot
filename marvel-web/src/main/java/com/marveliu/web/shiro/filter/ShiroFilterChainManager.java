@@ -41,6 +41,7 @@ public class ShiroFilterChainManager {
      * @return
      */
     public Map<String, Filter> initGetFilters() {
+        // url和对应的filter的映射关系
         Map<String, Filter> filters = new LinkedHashMap<>();
         PasswordFilter passwordFilter = new PasswordFilter();
         passwordFilter.setRedisTemplate(redisTemplate);

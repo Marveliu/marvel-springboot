@@ -1,11 +1,13 @@
 package com.marveliu.web.component.page;
 
-import com.marveliu.web.component.constant.Page;
+import com.marveliu.web.constant.Page;
 import com.marveliu.web.exception.ParamException;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 /**
@@ -13,13 +15,18 @@ import javax.validation.constraints.Min;
  * @Date 2018/9/13 下午11:26
  **/
 
+@Data
 public class PageQuery {
 
 
     @Min(value = 1, message = "当前页码不合法")
     private int pageNo = 1;
 
+    /**
+     * 防止恶意查询
+     */
     @Min(value = 1, message = "每页展示数量不合法")
+    @Max(value = 100, message = "每页展示数量不合法")
     private int pageSize = 10;
 
     private String sorter = "";
@@ -28,47 +35,6 @@ public class PageQuery {
      * 默认排序为最近一次更新时间
      */
     private Sort sort = new Sort(Sort.Direction.DESC, "operateTime");
-
-
-    public PageQuery(int pageNo, int pageSize) {
-        this.pageNo = pageNo;
-        this.pageSize = pageSize;
-    }
-
-
-    public Sort getSort() {
-        return sort;
-    }
-
-    public void setSort(Sort sort) {
-        this.sort = sort;
-    }
-
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public String getSorter() {
-        return sorter;
-    }
-
-    public void setSorter(String sorter) {
-        this.sorter = sorter;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
 
     /**
      * 计算页面偏移
@@ -122,14 +88,9 @@ public class PageQuery {
         return getSortPage();
     }
 
-
-    @Override
-    public String toString() {
-        return "PageQuery{" +
-                "pageNo=" + pageNo +
-                ", pageSize=" + pageSize +
-                ", sorter='" + sorter + '\'' +
-                ", sort=" + sort +
-                '}';
+    public PageQuery(int pageNo, int pageSize) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
     }
+
 }

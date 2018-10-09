@@ -29,7 +29,9 @@ public class FileUtil {
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
-        log.debug("文件上传地址：" + targetFile.getAbsolutePath());
+        if (log.isDebugEnabled()){
+            log.debug("文件上传地址：" + targetFile.getAbsolutePath());
+        }
         FileOutputStream out = new FileOutputStream(filePath + fileName);
         out.write(file);
         out.flush();

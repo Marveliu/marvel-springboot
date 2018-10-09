@@ -1,7 +1,7 @@
 package com.marveliu.web.controller;
 
 
-import com.marveliu.web.component.constant.ResultCode;
+import com.marveliu.web.constant.ResultCode;
 import com.marveliu.web.component.page.Result;
 import com.marveliu.web.dao.entity.User;
 import com.marveliu.web.domain.bo.AuthUser;

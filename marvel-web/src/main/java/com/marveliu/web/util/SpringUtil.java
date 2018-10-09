@@ -1,8 +1,13 @@
 package com.marveliu.web.util;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,6 +20,9 @@ import org.springframework.stereotype.Component;
 public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
+
+    private static ConfigurableApplicationContext configurableContext = (ConfigurableApplicationContext) applicationContext;
+    private static BeanDefinitionRegistry beanDefinitionRegistry = (DefaultListableBeanFactory) configurableContext.getBeanFactory();
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -29,6 +37,22 @@ public class SpringUtil implements ApplicationContextAware {
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
+
+    /**
+     * 注册bean
+     *
+     * @param beanId
+     * @param className
+     */
+    public static void registerBean(String beanId, String className) {
+        // get the BeanDefinitionBuilder
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(className);
+        // get the BeanDefinition
+        BeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
+        // register the bean
+        beanDefinitionRegistry.registerBeanDefinition(beanId, beanDefinition);
+    }
+
 
     /**
      * 通过name获取 Bean.

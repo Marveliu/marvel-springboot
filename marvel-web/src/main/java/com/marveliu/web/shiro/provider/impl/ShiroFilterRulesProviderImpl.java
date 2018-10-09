@@ -3,7 +3,6 @@ package com.marveliu.web.shiro.provider.impl;
 import com.marveliu.web.shiro.provider.ShiroFilterRulesProvider;
 import com.marveliu.web.shiro.rule.RolePermRule;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

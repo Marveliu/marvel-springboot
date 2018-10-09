@@ -33,6 +33,11 @@ public class RealmManager {
         this.jwtMatcher = jwtMatcher;
     }
 
+    /**
+     * passwordRealm first, then do jwtRealm
+     *
+     * @return
+     */
     public List<Realm> initGetRealm() {
         List<Realm> realmList = new LinkedList<>();
         // ----- password

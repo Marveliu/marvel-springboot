@@ -25,14 +25,17 @@ public class GlobalExceptionHandler {
 
     /**
      * 默认异常处理实现
+     * 主要用来捕获意想不到的异常，明确的异常需要定制实现
      *
-     * @param ex
+     * @param e
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public Result globalErrorHandler(Exception ex) {
-        log.error(ex.toString());
-        return null;
+    public Result globalErrorHandler(Exception e) {
+        /// TODO:打印出异常类名
+        // log.error(e.getStackTrace()[1].getClassName()+"_",+e.getMessage(), e);
+        log.error(e.getMessage(), e);
+        return Result.error().message(e.getMessage());
     }
 
     /**

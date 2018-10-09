@@ -39,13 +39,17 @@ public class UploadController {
             // todo:文件格式内容判断
             // 获取文件名
             String fileName = file.getOriginalFilename();
-            log.debug("上传的文件名为：" + fileName);
             // 获取文件的后缀，比如图片的jpeg,png
             String suffixName = fileName.substring(fileName.lastIndexOf("."));
-            log.debug("上传文件的后缀名为：" + suffixName);
             // 上传文件名
             String newFileName = UUID.randomUUID() + suffixName;
-            log.debug("转换后的文件名：" + newFileName);
+
+            if(log.isDebugEnabled()){
+                log.debug("上传的文件名为：" + fileName);
+                log.debug("上传文件的后缀名为：" + suffixName);
+                log.debug("转换后的文件名：" + newFileName);
+            }
+
             FileUtil.uploadFile(file.getBytes(), sysConfig.getUploadPath(), newFileName);
             return Result.oK();
         } catch (Exception e) {

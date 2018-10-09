@@ -1,4 +1,4 @@
-package com.marveliu.web.component.constant;
+package com.marveliu.web.constant;
 
 /**
  * @Author Marveliu

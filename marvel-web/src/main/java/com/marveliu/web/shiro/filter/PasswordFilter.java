@@ -12,8 +12,6 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.servlet.ServletRequest;
@@ -30,8 +28,6 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class PasswordFilter extends AccessControlFilter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordFilter.class);
 
     private StringRedisTemplate redisTemplate;
 
@@ -63,7 +59,7 @@ public class PasswordFilter extends AccessControlFilter {
                         .addData("tokenKey", tokenKey).addData("userKey", userKey.toUpperCase());
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
             } catch (Exception e) {
-                LOGGER.warn("签发动态秘钥失败" + e.getMessage(), e);
+                log.warn("签发动态秘钥失败" + e.getMessage(), e);
                 Message message = new Message();
                 message.ok(1000, "issued tokenKey fail");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
@@ -90,13 +86,13 @@ public class PasswordFilter extends AccessControlFilter {
                 //登录认证成功,进入请求派发json web token url资源内
                 return true;
             } catch (AuthenticationException e) {
-                LOGGER.warn(authenticationToken.getPrincipal() + "::" + e.getMessage());
+                log.warn(authenticationToken.getPrincipal() + "::" + e.getMessage());
                 // 返回response告诉客户端认证失败
                 Message message = new Message().error(1002, "login fail");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
                 return false;
             } catch (Exception e) {
-                LOGGER.error(authenticationToken.getPrincipal() + "::认证异常::" + e.getMessage(), e);
+                log.error(authenticationToken.getPrincipal() + "::认证异常::" + e.getMessage(), e);
                 // 返回response告诉客户端认证失败
                 Message message = new Message().error(1002, "login fail");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);

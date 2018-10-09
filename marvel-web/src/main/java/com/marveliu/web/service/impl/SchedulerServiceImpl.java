@@ -3,8 +3,6 @@ package com.marveliu.web.service.impl;
 import com.marveliu.web.service.SchedulerService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Service;
@@ -20,8 +18,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
-
-    private static final Logger logger = LoggerFactory.getLogger(SchedulerServiceImpl.class);
 
     @Autowired
     private Scheduler scheduler;
@@ -40,7 +36,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             scheduler.scheduleJob(jobDetail, trigger);
             scheduler.start();
         } catch (SchedulerException e) {
-            logger.error("创建任务调度失败", e);
+            log.error("创建任务调度失败", e);
         }
     }
 
@@ -50,7 +46,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             scheduler.rescheduleJob(oldTrigger.getKey(), newTrigger);
         } catch (SchedulerException e) {
-            logger.error("修改任务调度失败", e);
+            log.error("修改任务调度失败", e);
         }
     }
 
@@ -59,7 +55,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             return (List<Trigger>) scheduler.getTriggersOfJob(jobDetail.getKey());
         } catch (SchedulerException e) {
-            logger.error("修改任务调度失败", e);
+            log.error("修改任务调度失败", e);
         }
         return null;
     }
@@ -70,7 +66,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             return scheduler.deleteJob(jobDetail.getKey());
         } catch (SchedulerException e) {
-            logger.error("删除任务调度失败", e);
+            log.error("删除任务调度失败", e);
         }
         return null;
     }

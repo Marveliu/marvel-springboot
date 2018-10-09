@@ -6,6 +6,7 @@
 
 - [Background](#background)
 - [Features](#features)
+- [Todo](#todo)
 - [Usages](#usages)
 - [Branches](#branches)
 - [Maintainers](#maintainers)
@@ -36,6 +37,10 @@
 4. 任务调度
 5. 动态数据源配置
 
+## Todo
+
+1. 规范性参数校验
+
 ## usages
 
 1. 启动redis:redis-server
@@ -57,6 +62,7 @@
 1. [Druid连接池以及Druid监控](https://www.jianshu.com/p/139405d267d3)
 2. [QueryDsl](https://www.jianshu.com/p/99a5ec5c3bd5)
 3. [基于springboot2+ shiro+jwt的真正rest api资源无状态认证权限管理框架](https://gitee.com/tomsun28/bootshiro)
+4. [springboot整合shiro-登录认证和权限管理](http://www.ityouknow.com/springboot/2017/06/26/springboot-shiro.html)
 
 ## Contribute
 

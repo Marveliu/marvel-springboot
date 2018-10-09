@@ -24,8 +24,11 @@ public class ShiroConfig {
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager, ShiroFilterChainManager filterChainManager) {
+
         RestShiroFilterFactoryBean shiroFilterFactoryBean = new RestShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+
+        // shiroFilter配置
         shiroFilterFactoryBean.setFilters(filterChainManager.initGetFilters());
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainManager.initGetFilterChain());
         return shiroFilterFactoryBean;
@@ -34,10 +37,13 @@ public class ShiroConfig {
     @Bean
     @SuppressWarnings({"all", "rawtypes", "unchecked"})
     public SecurityManager securityManager(RealmManager realmManager) {
+
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setAuthenticator(new AModularRealmAuthenticator());
+
         DefaultSubjectDAO subjectDAO = (DefaultSubjectDAO) securityManager.getSubjectDAO();
         DefaultSessionStorageEvaluator evaluator = (DefaultSessionStorageEvaluator) subjectDAO.getSessionStorageEvaluator();
+
         ASubjectFactory subjectFactory = new ASubjectFactory(evaluator);
         securityManager.setSubjectFactory(subjectFactory);
         securityManager.setRealms(realmManager.initGetRealm());

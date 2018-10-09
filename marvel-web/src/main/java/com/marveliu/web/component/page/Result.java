@@ -1,6 +1,6 @@
 package com.marveliu.web.component.page;
 
-import com.marveliu.web.component.constant.ResultCode;
+import com.marveliu.web.constant.ResultCode;
 import lombok.Data;
 
 import java.sql.Timestamp;

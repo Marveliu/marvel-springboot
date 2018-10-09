@@ -18,9 +18,15 @@ import static java.util.stream.Collectors.toList;
 
 public class AModularRealmAuthenticator extends ModularRealmAuthenticator {
 
+    /**
+     * single Realm and multi Realm strategy
+     *
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
-
         assertRealmsConfigured();
         List<Realm> realms = this.getRealms()
                 .stream()

@@ -1,5 +1,19 @@
+#系统参数
+marvel:
+ app:
+  name: marvel-springboot
+  upload:
+    path: marvelUpload/
+    base: uploads/
+  author:
+    name: marveliu
+    email: luckylsn9610@gmail.com
+  version: v1
+
 server:
  port: 8080
+ servlet:
+  context-path: /${marvel.version}/
  compression:
   enabled: true
   mime-types: application/json,application/xml,text/html,text/xml,text/plain
@@ -89,17 +103,6 @@ redis:
 logging:
  config: classpath:logback-spring.xml
  path: ./logs
-
-#系统参数
-marvel:
- app:
-  name: marvel-springboot
-  upload:
-    path: marvelUpload/
-    base: uploads/
-  author:
-    name: marveliu
-    email: luckylsn9610@gmail.com
 
 
 

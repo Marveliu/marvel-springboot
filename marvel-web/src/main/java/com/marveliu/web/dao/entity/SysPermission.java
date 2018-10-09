@@ -2,7 +2,6 @@ package com.marveliu.web.dao.entity;
 
 import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
-import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,41 +26,43 @@ public class SysPermission extends AbstractModel<Integer> {
     private String name;
 
     /**
-     * 资源类型，[menu|button]
+     * 编码
      */
-    @Column(columnDefinition = "enum('menu','button')")
-    private String resourceType;
+    private String code;
+
+    /**
+     * 访问方式
+     */
+    @Column(columnDefinition = "varchar(10) comment '访问方式 GET POST PUT DELETE PATCH'")
+    private String method;
+
 
     /**
      * 资源路径
      */
+    @Column(columnDefinition = "varchar(100) comment '资源路径'")
     private String url;
 
     /**
-     * 权限字符串
-     * menu例子：role:*，
-     * button例子：role:create,role:update,role:delete,role:view
+     * 种类
      */
-    private String permission;
+    @Column(columnDefinition = "smallint(4) comment '类型 1:菜单menu 2:资源element(rest-api) 3:资源分类'")
+    private Integer type;
 
     /**
      * 父编号
      */
     private Long parentId;
 
-    /**
-     * 父编号列表
-     */
-    private String parentIds;
 
     /**
      * 能否使用
      */
     private Boolean available = Boolean.FALSE;
 
-    // /**
-    //  * 关联角色
-    //  */
+    /**
+     * 关联角色
+     */
     @ManyToMany
     @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<SysRole> roles;
