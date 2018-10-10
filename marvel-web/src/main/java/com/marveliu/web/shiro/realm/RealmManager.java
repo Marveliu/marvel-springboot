@@ -1,4 +1,4 @@
-package com.marveliu.web.shiro.Realm;
+package com.marveliu.web.shiro.realm;
 
 import com.marveliu.web.shiro.mathcer.JwtMatcher;
 import com.marveliu.web.shiro.mathcer.PasswordMatcher;

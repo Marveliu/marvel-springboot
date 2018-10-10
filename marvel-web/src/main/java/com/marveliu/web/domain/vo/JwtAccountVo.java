@@ -9,7 +9,7 @@ import java.util.Date;
  * @Description:
  **/
 
-public class JwtAccount implements Serializable {
+public class JwtAccountVo implements Serializable {
 
     private static final long serialVersionUID = -895875540581785581L;
 
@@ -53,11 +53,11 @@ public class JwtAccount implements Serializable {
      */
     private String host;
 
-    public JwtAccount() {
+    public JwtAccountVo() {
 
     }
 
-    public JwtAccount(String tokenId, String appId, String issuer, Date issuedAt, String audience, String roles, String perms, String host) {
+    public JwtAccountVo(String tokenId, String appId, String issuer, Date issuedAt, String audience, String roles, String perms, String host) {
         this.tokenId = tokenId;
         this.appId = appId;
         this.issuer = issuer;

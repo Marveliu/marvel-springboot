@@ -1,10 +1,11 @@
-package com.marveliu.web.shiro.Realm;
+package com.marveliu.web.shiro.realm;
 
 
+import com.marveliu.web.domain.vo.AccountVo;
 import com.marveliu.web.shiro.provider.AccountProvider;
 import com.marveliu.web.shiro.token.PasswordToken;
+import com.marveliu.web.util.AESUtil;
 import com.marveliu.web.util.MD5Util;
-import com.marveliu.web.domain.vo.Account;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -49,14 +50,17 @@ public class PasswordRealm extends AuthorizingRealm {
         if (null == authenticationToken.getPrincipal() || null == authenticationToken.getCredentials()) {
             throw new UnknownAccountException();
         }
-        Integer appId = (Integer) authenticationToken.getPrincipal();
-        Account account = accountProvider.loadAccount(appId);
+
+        String username = authenticationToken.getPrincipal().toString();
+        AccountVo account = accountProvider.loadAccount(username);
+        PasswordToken passwordToken = (PasswordToken) authenticationToken;
         if (account != null) {
             // 用盐对密码进行MD5加密
-            ((PasswordToken) authenticationToken).setPassword(MD5Util.md5(((PasswordToken) authenticationToken).getPassword() + account.getSalt()));
-            return new SimpleAuthenticationInfo(appId, account.getPassword(), getName());
+            String password = AESUtil.aesDecode(passwordToken.getPassword(), passwordToken.getTokenKey());
+            ((PasswordToken) authenticationToken).setPassword(MD5Util.md5((password + account.getSalt())));
+            return new SimpleAuthenticationInfo(username, account.getPassword(), getName());
         } else {
-            return new SimpleAuthenticationInfo(appId, "", getName());
+            return new SimpleAuthenticationInfo(username, "", getName());
         }
 
     }

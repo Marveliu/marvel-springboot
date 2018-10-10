@@ -1,7 +1,7 @@
 package com.marveliu.web.shiro.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.marveliu.web.domain.vo.Message;
+import com.marveliu.web.domain.vo.MessageVo;
 import com.marveliu.web.service.AccountService;
 import com.marveliu.web.shiro.token.JwtToken;
 import com.marveliu.web.util.HttpUtil;
@@ -64,26 +64,26 @@ public class JwtFilter extends MPathMatchingFilter {
                     if (null != refreshJwt && refreshJwt.equals(jwt)) {
                         // 重新申请新的JWT
                         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
-                        String roles = accountService.loadAccountRole(Integer.valueOf(appId));
+                        String roles = accountService.loadAccountRole(appId);
                         //seconds为单位,10 hours
                         long refreshPeriodTime = 36000L;
                         String newJwt = JwtUtil.issueJWT(UUID.randomUUID().toString(), appId,
                                 "token-server", refreshPeriodTime >> 1, roles, null, SignatureAlgorithm.HS512);
                         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
                         redisTemplate.opsForValue().set("JWT-SESSION-" + appId, newJwt, refreshPeriodTime, TimeUnit.SECONDS);
-                        Message message = new Message().ok(1005, "new jwt").addData("jwt", newJwt);
+                        MessageVo message = new MessageVo().ok(1005, "new jwt").addData("jwt", newJwt);
                         HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
                         return false;
                     } else {
                         // jwt时间失效过期,jwt refresh time失效 返回jwt过期客户端重新登录
-                        Message message = new Message().error(1006, "expired jwt");
+                        MessageVo message = new MessageVo().error(1006, "expired jwt");
                         HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
                         return false;
                     }
 
                 }
                 // 其他的判断为JWT错误无效
-                Message message = new Message().error(1007, "error Jwt");
+                MessageVo message = new MessageVo().error(1007, "error Jwt");
                 HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
                 return false;
 
@@ -91,13 +91,13 @@ public class JwtFilter extends MPathMatchingFilter {
                 // 其他错误
                 log.error(IpUtil.getIpFromRequest(WebUtils.toHttp(servletRequest)) + "--JWT认证失败" + e.getMessage(), e);
                 // 告知客户端JWT错误1005,需重新登录申请jwt
-                Message message = new Message().error(1007, "error jwt");
+                MessageVo message = new MessageVo().error(1007, "error jwt");
                 HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
                 return false;
             }
         } else {
             // 请求未携带jwt 判断为无效请求
-            Message message = new Message().error(1111, "error request");
+            MessageVo message = new MessageVo().error(1111, "error request");
             HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
             return false;
         }
@@ -110,12 +110,12 @@ public class JwtFilter extends MPathMatchingFilter {
         // 未认证的情况
         if (null == subject || !subject.isAuthenticated()) {
             // 告知客户端JWT认证失败需跳转到登录页面
-            Message message = new Message().error(1006, "error jwt");
+            MessageVo message = new MessageVo().error(1006, "error jwt");
             HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
         } else {
             // 已经认证但未授权的情况
             // 告知客户端JWT没有权限访问此资源
-            Message message = new Message().error(1008, "no permission");
+            MessageVo message = new MessageVo().error(1008, "no permission");
             HttpUtil.responseWrite(JSON.toJSONString(message), servletResponse);
         }
         // 过滤链终止

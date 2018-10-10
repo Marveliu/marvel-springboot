@@ -1,7 +1,7 @@
 package com.marveliu.web.shiro.config;
 
-import com.marveliu.web.shiro.Realm.AModularRealmAuthenticator;
-import com.marveliu.web.shiro.Realm.RealmManager;
+import com.marveliu.web.shiro.realm.AModularRealmAuthenticator;
+import com.marveliu.web.shiro.realm.RealmManager;
 import com.marveliu.web.shiro.filter.ASubjectFactory;
 import com.marveliu.web.shiro.filter.ShiroFilterChainManager;
 import org.apache.shiro.SecurityUtils;

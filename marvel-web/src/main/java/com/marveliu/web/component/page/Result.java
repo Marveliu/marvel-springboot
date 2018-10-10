@@ -1,6 +1,6 @@
 package com.marveliu.web.component.page;
 
-import com.marveliu.web.constant.ResultCode;
+import com.marveliu.web.constant.ResultCodeEnum;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -41,7 +41,7 @@ public class Result {
      * @return
      */
     public static Result oK() {
-        return new Result().ok(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg());
+        return new Result().ok(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMsg());
     }
 
     /**
@@ -51,7 +51,7 @@ public class Result {
      * @param code
      * @return
      */
-    public static Result oK(ResultCode code) {
+    public static Result oK(ResultCodeEnum code) {
         return new Result().ok(code.getCode(), code.getMsg());
     }
 
@@ -61,7 +61,7 @@ public class Result {
      * @return
      */
     public static Result error() {
-        return new Result().error(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg());
+        return new Result().error(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMsg());
     }
 
     /**
@@ -70,7 +70,7 @@ public class Result {
      * @param code
      * @return
      */
-    public static Result error(ResultCode code) {
+    public static Result error(ResultCodeEnum code) {
         return new Result().error(code.getCode(), code.getMsg());
     }
 

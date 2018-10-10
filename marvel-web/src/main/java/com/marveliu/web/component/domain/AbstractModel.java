@@ -1,6 +1,6 @@
 package com.marveliu.web.component.domain;
 
-import com.marveliu.web.constant.Status;
+import com.marveliu.web.constant.CommonEnum;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -28,8 +28,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
     @Column(columnDefinition = "int default 0")
     private int updator = 0;
 
-    @Column(columnDefinition = "int " +
-            "COMMENT '最近修改时间'")
+    // @Column(columnDefinition = "COMMENT '最近修改时间'")
     private Long operateTime;
 
     @Column(columnDefinition = "varchar(200) " +
@@ -37,7 +36,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
     private String remark;
 
     @Column(name = "del", columnDefinition = "tinyint default 0 comment '标记删除字段 0未删除 1已删除'")
-    private int del = Status.DEL_NO;
+    private int del = CommonEnum.DEL_NO.getCode();
 
     public int getCreator() {
         return creator;

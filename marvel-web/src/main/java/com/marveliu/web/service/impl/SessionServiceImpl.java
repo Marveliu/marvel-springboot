@@ -1,6 +1,6 @@
 package com.marveliu.web.service.impl;
 
-import com.marveliu.web.domain.vo.UserOnline;
+import com.marveliu.web.domain.vo.UserOnlineVo;
 import com.marveliu.web.service.SessionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,8 @@ public class SessionServiceImpl implements SessionService {
      * @return
      */
     @Override
-    public List<UserOnline> list() {
-        List<UserOnline> list = new ArrayList<>();
+    public List<UserOnlineVo> list() {
+        List<UserOnlineVo> list = new ArrayList<>();
         // Collection<Session> sessions = sessionDAO.getActiveSessions();
         // for (Session session : sessions) {
         //     UserOnline userOnline = new UserOnline();

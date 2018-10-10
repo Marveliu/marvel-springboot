@@ -1,21 +1,27 @@
 package com.marveliu.web.constant;
 
 /**
- * @Author: Marveliu
- * @Date: 2018/10/10 上午10:56
- * @Description:
+ * @Author Marveliu
+ * @Date 2018/7/18 8:41 PM
  **/
 
+public enum CommonEnum {
 
-public enum UserEnum{
+    /**
+     * 已删除
+     */
+    DEL_YES(1, "已删除"),
 
-    NOMAL(1, "用户启用"),
-    FORBIDDEN(2, "用户禁用");
+    /**
+     * 未删除
+     */
+    DEL_NO(2, "已删除");
+
 
     private int code;
     private String msg;
 
-    UserEnum(int code, String msg) {
+    CommonEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

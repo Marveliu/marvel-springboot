@@ -1,6 +1,6 @@
 package com.marveliu.web.component.page;
 
-import com.marveliu.web.constant.Page;
+import com.marveliu.web.constant.PageCons;
 import com.marveliu.web.exception.ParamException;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -73,15 +73,15 @@ public class PageQuery {
     public PageRequest getPage() {
         // 校验sort是否符合规则
         if (!StringUtils.isEmpty(sorter)) {
-            String[] sorts = sorter.split(Page.SEPARATOR);
+            String[] sorts = sorter.split(PageCons.SEPARATOR);
             // 校验sort的长度，以及sort[1]是否符合规则
-            if (sorts.length != 2 || !(sorts[1].equals(Page.ASC) || sorts[1].equals(Page.DESC))) {
+            if (sorts.length != 2 || !(sorts[1].equals(PageCons.ASC) || sorts[1].equals(PageCons.DESC))) {
                 throw new ParamException("排序参数不合法");
             }
-            if (sorts[1].equals(Page.ASC)) {
+            if (sorts[1].equals(PageCons.ASC)) {
                 sort = new Sort(Sort.Direction.ASC, sorts[0]);
             }
-            if (sorts[1].equals(Page.DESC)) {
+            if (sorts[1].equals(PageCons.DESC)) {
                 sort = new Sort(Sort.Direction.DESC, sorts[0]);
             }
         }

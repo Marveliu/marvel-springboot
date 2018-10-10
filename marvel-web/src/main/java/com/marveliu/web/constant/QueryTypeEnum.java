@@ -8,7 +8,7 @@ package com.marveliu.web.constant;
 /**
  * 查询条件支持的过滤方式
  */
-public enum QueryType {
+public enum QueryTypeEnum {
     like,
     equal,
     ne,

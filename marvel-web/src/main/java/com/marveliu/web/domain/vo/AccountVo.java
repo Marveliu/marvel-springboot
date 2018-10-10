@@ -11,7 +11,7 @@ import java.io.Serializable;
  **/
 
 @Data
-public class Account implements Serializable {
+public class AccountVo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,10 +19,10 @@ public class Account implements Serializable {
     private String password;
     private String salt;
 
-    public Account() {
+    public AccountVo() {
     }
 
-    public Account(Integer appId, String password, String salt) {
+    public AccountVo(Integer appId, String password, String salt) {
         this.appId = appId;
         this.password = password;
         this.salt = salt;

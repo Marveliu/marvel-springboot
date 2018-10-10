@@ -2,6 +2,7 @@ package com.marveliu.web.service;
 
 import com.marveliu.web.component.service.BaseService;
 import com.marveliu.web.dao.entity.User;
+import com.marveliu.web.dao.repository.UserRepository;
 
 /**
  * @Author: Marveliu
@@ -11,5 +12,7 @@ import com.marveliu.web.dao.entity.User;
 
 public interface UserService extends BaseService<User, Integer> {
 
-    public boolean authorityUserRole(User user, Integer roleId);
+    UserRepository getDAO();
+
+    boolean authorityUserRole(User user, Integer roleId);
 }

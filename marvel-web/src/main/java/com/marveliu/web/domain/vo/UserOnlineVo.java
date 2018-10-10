@@ -12,7 +12,7 @@ import java.io.Serializable;
  **/
 
 @Data
-public class UserOnline implements Serializable {
+public class UserOnlineVo implements Serializable {
 
     private static final long serialVersionUID = 3828664348416633856L;
     /**

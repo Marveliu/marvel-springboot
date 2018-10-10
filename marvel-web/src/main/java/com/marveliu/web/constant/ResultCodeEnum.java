@@ -5,7 +5,7 @@ package com.marveliu.web.constant;
  * @Date 2018/7/18 9:06 PM
  **/
 
-public enum ResultCode {
+public enum ResultCodeEnum {
 
     ERROR(-1, "error"),
     SUCCESS(0, "success"),
@@ -20,7 +20,7 @@ public enum ResultCode {
     private int code;
     private String msg;
 
-    ResultCode(int code, String msg) {
+    ResultCodeEnum(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

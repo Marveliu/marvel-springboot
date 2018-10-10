@@ -1,7 +1,7 @@
 package com.marveliu.web.controller;
 
 import com.marveliu.web.component.page.Result;
-import com.marveliu.web.domain.vo.SysConfig;
+import com.marveliu.web.domain.ao.SysConfig;
 import com.marveliu.web.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

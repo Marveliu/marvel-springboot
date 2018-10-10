@@ -13,14 +13,14 @@ import org.apache.shiro.authc.AuthenticationToken;
 public class PasswordToken implements AuthenticationToken {
 
     private static final long serialVersionUID = 1L;
-    private String appId;
+    private String username;
     private String password;
     private String timestamp;
     private String host;
     private String tokenKey;
 
     public PasswordToken(String appId, String password, String timestamp, String host, String tokenKey) {
-        this.appId = appId;
+        this.username = appId;
         this.password = password;
         this.timestamp = timestamp;
         this.host = host;
@@ -29,7 +29,7 @@ public class PasswordToken implements AuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return this.appId;
+        return this.username;
     }
 
     @Override

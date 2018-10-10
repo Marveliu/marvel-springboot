@@ -1,6 +1,6 @@
 package com.marveliu.web.service;
 
-import com.marveliu.web.domain.vo.UserOnline;
+import com.marveliu.web.domain.vo.UserOnlineVo;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface SessionService {
      *
      * @return
      */
-    List<UserOnline> list();
+    List<UserOnlineVo> list();
 
     /**
      * 强制下线

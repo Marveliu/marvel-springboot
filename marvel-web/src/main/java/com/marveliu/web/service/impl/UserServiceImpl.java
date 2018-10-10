@@ -1,6 +1,5 @@
 package com.marveliu.web.service.impl;
 
-import com.marveliu.web.component.dao.BaseDao;
 import com.marveliu.web.component.service.impl.BaseServiceImpl;
 import com.marveliu.web.dao.entity.Role;
 import com.marveliu.web.dao.entity.User;
@@ -13,6 +12,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
     private RoleService roleService;
 
     @Override
-    public BaseDao<User, Integer> getDAO() {
+    public UserRepository getDAO() {
         return userRepository;
     }
 
@@ -43,6 +43,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer> implements U
             return false;
         } else {
             List<Role> roleList = user.getRoles();
+            if (ObjectUtils.isEmpty(roleList)) {
+                roleList = new ArrayList<>();
+            }
             roleList.add(role);
             user.setRoles(roleList);
         }

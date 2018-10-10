@@ -1,6 +1,6 @@
 package com.marveliu.web.shiro.provider.impl;
 
-import com.marveliu.web.domain.vo.Account;
+import com.marveliu.web.domain.vo.AccountVo;
 import com.marveliu.web.service.AccountService;
 import com.marveliu.web.shiro.provider.AccountProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class AccountProviderImpl implements AccountProvider {
     private AccountService accountService;
 
     @Override
-    public Account loadAccount(Integer appId) {
-        return accountService.loadAccount(appId);
+    public AccountVo loadAccount(String username) {
+        return accountService.loadAccount(username);
     }
 }

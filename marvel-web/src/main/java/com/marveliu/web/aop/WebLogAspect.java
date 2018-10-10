@@ -1,6 +1,7 @@
 package com.marveliu.web.aop;
 
 
+import com.marveliu.web.component.page.Result;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -43,7 +44,7 @@ public class WebLogAspect {
         StringBuilder str = new StringBuilder();
         logs.set(str);
         logs.get().append(String.format("请求地址:[%s],HTTP METHOD:[%s],IP:[%s],CLASS_METHOD:[%s],参数:%s,",
-                request.getRequestURL().toString(),
+                StringUtils.replace(request.getRequestURL().toString(), "http://" + request.getRemoteAddr(), "*"),
                 request.getMethod(),
                 request.getRemoteAddr(),
                 joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName(),
@@ -54,15 +55,22 @@ public class WebLogAspect {
 
     @Around("webLog()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
-        long startTime = System.currentTimeMillis();
-        // ob 为方法的返回值
-        Object ob = pjp.proceed();
-        logs.get().append(String.format("返回值:%s,耗时:%d",
-                StringUtils.abbreviate(ob.toString(), 100),
-                System.currentTimeMillis() - startTime));
-        logger.info(StringUtils.replace(logs.get().toString(), searchString, "*"));
-        return ob;
+        try {
+            long startTime = System.currentTimeMillis();
+            // ob 为方法的返回值
+            Object ob = pjp.proceed();
+            if (!org.springframework.util.ObjectUtils.isEmpty(ob)) {
+                logs.get().append(String.format("返回值:%s,耗时:%d",
+                        StringUtils.abbreviate(ob.toString(), 100),
+                        System.currentTimeMillis() - startTime));
+                logger.info(StringUtils.replace(logs.get().toString(), searchString, "*"));
+                return ob;
+            }
+        } catch (Exception e) {
+            logger.info("Invoke error:" + StringUtils.replace(logs.get().toString(), searchString, "*"));
+            throw e;
+        }
+        return Result.error();
     }
-
 
 }

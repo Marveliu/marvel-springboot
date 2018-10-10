@@ -1,9 +1,12 @@
 package com.marveliu.web.config;
 
-import com.marveliu.web.domain.vo.SysConfig;
+import com.marveliu.web.domain.ao.SysConfig;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.persistence.EntityManager;
 
 /**
  * @Author: Marveliu
@@ -38,6 +41,17 @@ public class MarvelConfig {
         sysConfig.setAuthorName(authorName);
         sysConfig.setAuthorEmail(authorEmail);
         return sysConfig;
+    }
+
+    /**
+     * queryDSl工厂
+     *
+     * @param entityManager
+     * @return
+     */
+    @Bean
+    public JPAQueryFactory jpaQueryFactory(EntityManager entityManager) {
+        return new JPAQueryFactory(entityManager);
     }
 
 }

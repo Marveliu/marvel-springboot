@@ -1,5 +1,6 @@
 package com.marveliu.web.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
 
@@ -60,10 +61,4 @@ public class Resource extends AbstractModel<Integer> {
      */
     private Boolean available = Boolean.FALSE;
 
-    /**
-     * 关联角色
-     */
-    @ManyToMany
-    @JoinTable(name = "RolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
-    private List<Role> roles;
 }

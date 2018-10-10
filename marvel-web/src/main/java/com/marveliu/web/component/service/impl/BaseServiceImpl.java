@@ -4,8 +4,8 @@ import com.marveliu.web.component.dao.BaseDao;
 import com.marveliu.web.component.domain.AbstractModel;
 import com.marveliu.web.component.domain.BaseModel;
 import com.marveliu.web.component.service.BaseService;
-import com.marveliu.web.constant.QueryType;
-import com.marveliu.web.constant.Status;
+import com.marveliu.web.constant.QueryTypeEnum;
+import com.marveliu.web.constant.CommonEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +33,7 @@ import java.util.*;
 public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serializable> implements BaseService<T, ID> {
 
 
+    @Override
     public abstract BaseDao<T, ID> getDAO();
 
     /**
@@ -47,11 +48,6 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         if (t instanceof AbstractModel) {
             AbstractModel<T> baseModel = (AbstractModel<T>) t;
             Long current = System.currentTimeMillis();
-            if (baseModel.getId() == null) {
-                baseModel.setCreateTime(current);
-            } else {
-                copyNullProperties(this.findById(t.getId()), baseModel);
-            }
             baseModel.setOperateTime(current);
         }
         return getDAO().save(t);
@@ -114,7 +110,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         T t = findById(id);
         AbstractModel<T> baseModel = (AbstractModel<T>) t;
         baseModel.setOperateTime(System.currentTimeMillis());
-        baseModel.setDel(Status.DEL_YES);
+        baseModel.setDel(CommonEnum.DEL_YES.getCode());
         getDAO().save(t);
     }
 
@@ -127,7 +123,7 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
     public void vdel(T t) {
         AbstractModel<T> baseModel = (AbstractModel<T>) t;
         baseModel.setOperateTime(System.currentTimeMillis());
-        baseModel.setDel(Status.DEL_NO);
+        baseModel.setDel(CommonEnum.DEL_NO.getCode());
         getDAO().save(t);
     }
 
@@ -230,12 +226,12 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
             return cb.equal(root.get(arr[0]).as(value.getClass()), value);
         }
 
-        if (QueryType.equal.name().equals(arr[1])) {
+        if (QueryTypeEnum.equal.name().equals(arr[1])) {
             return cb.equal(root.get(arr[0]).as(value.getClass()), value);
         }
         // todo:多类型in支持
-        if (QueryType.in.name().equals(arr[1])) {
-            if (QueryType.in.name().equals(arr[1])) {
+        if (QueryTypeEnum.in.name().equals(arr[1])) {
+            if (QueryTypeEnum.in.name().equals(arr[1])) {
                 // todo:Integer 判定
                 CriteriaBuilder.In<Object> in = cb.in(root.get(arr[0]));
                 try {
@@ -248,22 +244,22 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
                 return in;
             }
         }
-        if (QueryType.like.name().equals(arr[1])) {
+        if (QueryTypeEnum.like.name().equals(arr[1])) {
             return cb.like(root.get(arr[0]).as(String.class), String.format("%%%s%%", value));
         }
-        if (QueryType.ne.name().equals(arr[1])) {
+        if (QueryTypeEnum.ne.name().equals(arr[1])) {
             return cb.notEqual(root.get(arr[0]).as(value.getClass()), value);
         }
-        if (QueryType.lt.name().equals(arr[1])) {
+        if (QueryTypeEnum.lt.name().equals(arr[1])) {
             return getLessThanPredicate(arr, value, root, cb);
         }
-        if (QueryType.lte.name().equals(arr[1])) {
+        if (QueryTypeEnum.lte.name().equals(arr[1])) {
             return getLessThanOrEqualToPredicate(arr, value, root, cb);
         }
-        if (QueryType.gt.name().equals(arr[1])) {
+        if (QueryTypeEnum.gt.name().equals(arr[1])) {
             return getGreaterThanPredicate(arr, value, root, cb);
         }
-        if (QueryType.gte.name().equals(arr[1])) {
+        if (QueryTypeEnum.gte.name().equals(arr[1])) {
             return getGreaterThanOrEqualToPredicate(arr, value, root, cb);
         }
         throw new UnsupportedOperationException(String.format("不支持的查询类型[%s]", arr[1]));
@@ -375,7 +371,9 @@ public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serial
         Set<String> noEmptyName = new HashSet<>();
         for (PropertyDescriptor p : pds) {
             Object value = srcBean.getPropertyValue(p.getName());
-            if (value != null) noEmptyName.add(p.getName());
+            if (value != null) {
+                noEmptyName.add(p.getName());
+            }
         }
         String[] result = new String[noEmptyName.size()];
         return noEmptyName.toArray(result);

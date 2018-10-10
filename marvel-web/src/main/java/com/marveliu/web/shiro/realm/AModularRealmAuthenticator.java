@@ -1,4 +1,4 @@
-package com.marveliu.web.shiro.Realm;
+package com.marveliu.web.shiro.realm;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 public class AModularRealmAuthenticator extends ModularRealmAuthenticator {
 
     /**
-     * single Realm and multi Realm strategy
+     * single realm and multi realm strategy
      *
      * @param authenticationToken
      * @return

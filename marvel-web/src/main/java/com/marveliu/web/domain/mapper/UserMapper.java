@@ -1,24 +1,22 @@
 package com.marveliu.web.domain.mapper;
 
 import com.marveliu.web.dao.entity.User;
-import com.marveliu.web.domain.vo.AccountVo;
+import com.marveliu.web.domain.param.RegUserParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 /**
  * @Author: Marveliu
- * @Date: 2018/10/7 下午7:59
+ * @Date: 2018/10/10 下午3:39
  * @Description:
  **/
 
 @Mapper(componentModel = "spring")
-public interface AccountMapper {
+public interface UserMapper {
 
     @Mappings({
-            @Mapping(source = "user.uid", target = "appId")
+            @Mapping(source = "salt", target = "salt")
     })
-    AccountVo from(User user);
-
-
+    User from(RegUserParam regUserParam, String salt);
 }

@@ -13,7 +13,7 @@ marvel:
 server:
   port: 8080
   servlet:
-    context-path: /${marvel.version}/
+    context-path: /${marvel.app.version}/
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain
@@ -48,11 +48,12 @@ spring:
     username: root
     password: root
   jpa:
+    one-in-view: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: MYSQL
     show_sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate.format_sql: true
   quartz:

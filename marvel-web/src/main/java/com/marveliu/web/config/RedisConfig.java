@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @Author: Marveliu
  * @Date: 2018/9/21 下午4:09
- * @Description:
+ * @Description: RedisConfig
  **/
 
 @Slf4j

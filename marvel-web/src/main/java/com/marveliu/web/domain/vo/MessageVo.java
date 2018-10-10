@@ -1,7 +1,6 @@
 package com.marveliu.web.domain.vo;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,7 @@ import java.util.Map;
  * @Description:
  **/
 
-public class Message {
+public class MessageVo {
 
     /**
      * 消息头meta 存放状态信息 code message
@@ -27,7 +26,7 @@ public class Message {
         return meta;
     }
 
-    public Message setMeta(Map<String, Object> meta) {
+    public MessageVo setMeta(Map<String, Object> meta) {
         this.meta = meta;
         return this;
     }
@@ -36,22 +35,22 @@ public class Message {
         return data;
     }
 
-    public Message setData(Map<String, Object> data) {
+    public MessageVo setData(Map<String, Object> data) {
         this.data = data;
         return this;
     }
 
-    public Message addMeta(String key, Object object) {
+    public MessageVo addMeta(String key, Object object) {
         this.meta.put(key, object);
         return this;
     }
 
-    public Message addData(String key, Object object) {
+    public MessageVo addData(String key, Object object) {
         this.data.put(key, object);
         return this;
     }
 
-    public Message ok(int statusCode, String statusMsg) {
+    public MessageVo ok(int statusCode, String statusMsg) {
         this.addMeta("success", Boolean.TRUE);
         this.addMeta("code", statusCode);
         this.addMeta("msg", statusMsg);
@@ -59,7 +58,7 @@ public class Message {
         return this;
     }
 
-    public Message error(int statusCode, String statusMsg) {
+    public MessageVo error(int statusCode, String statusMsg) {
         this.addMeta("success", Boolean.FALSE);
         this.addMeta("code", statusCode);
         this.addMeta("msg", statusMsg);

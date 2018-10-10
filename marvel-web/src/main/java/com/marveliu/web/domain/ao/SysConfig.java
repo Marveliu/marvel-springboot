@@ -1,4 +1,4 @@
-package com.marveliu.web.domain.vo;
+package com.marveliu.web.domain.ao;
 
 import lombok.Data;
 

@@ -1,7 +1,7 @@
 package com.marveliu.web.shiro.provider;
 
 
-import com.marveliu.web.domain.vo.Account;
+import com.marveliu.web.domain.vo.AccountVo;
 
 /**
  * @Author: Marveliu
@@ -11,5 +11,5 @@ import com.marveliu.web.domain.vo.Account;
 
 public interface AccountProvider {
 
-    Account loadAccount(Integer appId);
+    AccountVo loadAccount(String username);
 }

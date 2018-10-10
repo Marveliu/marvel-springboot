@@ -1,5 +1,6 @@
 package com.marveliu.web.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
 import org.hibernate.annotations.Target;
@@ -30,9 +31,6 @@ public class User extends AbstractModel<Integer> {
     @Column(unique = true)
     private String realName;
 
-    @Column
-    private String Avatar;
-
     /**
      * 密码
      */
@@ -54,7 +52,8 @@ public class User extends AbstractModel<Integer> {
      * 一个用户具有多个角色
      */
     @Target(Role.class)
-    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<Role> roles;
 
@@ -63,12 +62,4 @@ public class User extends AbstractModel<Integer> {
         return uid;
     }
 
-    /**
-     * 密码盐.
-     *
-     * @return
-     */
-    public String getCredentialsSalt() {
-        return this.username + this.salt;
-    }
 }

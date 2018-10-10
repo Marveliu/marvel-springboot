@@ -77,3 +77,6 @@ hs_err_pid*
 /logs/
 /marvel-springboot/
 /marvelUpload/
+/marvel-web/logs/
+/marvel-web/marvel-springboot/
+/marvel-web/marvelUpload/

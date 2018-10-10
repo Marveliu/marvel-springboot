@@ -1,6 +1,6 @@
 package com.marveliu.web.shiro.mathcer;
 
-import com.marveliu.web.domain.vo.JwtAccount;
+import com.marveliu.web.domain.vo.JwtAccountVo;
 import com.marveliu.web.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -25,7 +25,7 @@ public class JwtMatcher implements CredentialsMatcher {
     @Override
     public boolean doCredentialsMatch(AuthenticationToken authenticationToken, AuthenticationInfo authenticationInfo) {
         String jwt = (String) authenticationInfo.getCredentials();
-        JwtAccount jwtAccount = null;
+        JwtAccountVo jwtAccount = null;
         try {
             jwtAccount = JwtUtil.parseJwt(jwt, JwtUtil.SECRET_KEY);
         } catch (SignatureException | UnsupportedJwtException | MalformedJwtException | IllegalArgumentException e) {

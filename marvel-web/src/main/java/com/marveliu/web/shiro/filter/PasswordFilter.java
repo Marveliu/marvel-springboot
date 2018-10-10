@@ -1,7 +1,7 @@
 package com.marveliu.web.shiro.filter;
 
 import com.alibaba.fastjson.JSON;
-import com.marveliu.web.domain.vo.Message;
+import com.marveliu.web.domain.vo.MessageVo;
 import com.marveliu.web.shiro.token.PasswordToken;
 import com.marveliu.web.util.CommonUtil;
 import com.marveliu.web.util.HttpUtil;
@@ -52,15 +52,15 @@ public class PasswordFilter extends AccessControlFilter {
             String tokenKey = CommonUtil.getRandomString(16);
             String userKey = CommonUtil.getRandomString(6);
             try {
-                redisTemplate.opsForValue().set("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase() + userKey.toUpperCase(), tokenKey, 5, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase() + userKey.toUpperCase(), tokenKey, 100, TimeUnit.SECONDS);
                 // 动态秘钥response返回给前端
-                Message message = new Message();
+                MessageVo message = new MessageVo();
                 message.ok(1000, "issued tokenKey success")
                         .addData("tokenKey", tokenKey).addData("userKey", userKey.toUpperCase());
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
             } catch (Exception e) {
                 log.warn("签发动态秘钥失败" + e.getMessage(), e);
-                Message message = new Message();
+                MessageVo message = new MessageVo();
                 message.ok(1000, "issued tokenKey fail");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
             }
@@ -75,7 +75,7 @@ public class PasswordFilter extends AccessControlFilter {
                 authenticationToken = createPasswordToken(request);
             } catch (Exception e) {
                 // response 告知无效请求
-                Message message = new Message().error(1111, "error request");
+                MessageVo message = new MessageVo().error(1111, "error request");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
                 return false;
             }
@@ -88,13 +88,13 @@ public class PasswordFilter extends AccessControlFilter {
             } catch (AuthenticationException e) {
                 log.warn(authenticationToken.getPrincipal() + "::" + e.getMessage());
                 // 返回response告诉客户端认证失败
-                Message message = new Message().error(1002, "login fail");
+                MessageVo message = new MessageVo().error(1002, "login fail");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
                 return false;
             } catch (Exception e) {
                 log.error(authenticationToken.getPrincipal() + "::认证异常::" + e.getMessage(), e);
                 // 返回response告诉客户端认证失败
-                Message message = new Message().error(1002, "login fail");
+                MessageVo message = new MessageVo().error(1002, "login fail");
                 HttpUtil.responseWrite(JSON.toJSONString(message), response);
                 return false;
             }
@@ -106,7 +106,7 @@ public class PasswordFilter extends AccessControlFilter {
         // 之后添加对账户的找回等
 
         // response 告知无效请求
-        Message message = new Message().error(1111, "error request");
+        MessageVo message = new MessageVo().error(1111, "error request");
         HttpUtil.responseWrite(JSON.toJSONString(message), response);
         return false;
     }
@@ -123,7 +123,7 @@ public class PasswordFilter extends AccessControlFilter {
         String password = map.get("password");
         String timestamp = map.get("timestamp");
         String methodName = map.get("methodName");
-        String appId = map.get("appId");
+        String appId = map.get("username");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
                 && null != password
@@ -157,7 +157,7 @@ public class PasswordFilter extends AccessControlFilter {
      */
     private AuthenticationToken createPasswordToken(ServletRequest request) throws Exception {
         Map<String, String> map = HttpUtil.getRequestBodyMap(request);
-        String appId = map.get("appId");
+        String appId = map.get("username");
         String timestamp = map.get("timestamp");
         String password = map.get("password");
         String host = IpUtil.getIpFromRequest(WebUtils.toHttp(request));

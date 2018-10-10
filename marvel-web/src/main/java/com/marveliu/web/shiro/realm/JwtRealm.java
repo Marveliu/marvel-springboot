@@ -1,4 +1,4 @@
-package com.marveliu.web.shiro.Realm;
+package com.marveliu.web.shiro.realm;
 
 import com.marveliu.web.shiro.token.JwtToken;
 import com.marveliu.web.util.JwtUtil;

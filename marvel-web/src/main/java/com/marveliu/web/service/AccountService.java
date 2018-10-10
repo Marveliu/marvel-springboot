@@ -1,7 +1,7 @@
 package com.marveliu.web.service;
 
 import com.marveliu.web.dao.entity.User;
-import com.marveliu.web.domain.vo.Account;
+import com.marveliu.web.domain.vo.AccountVo;
 
 /**
  * @Author: Marveliu
@@ -11,11 +11,11 @@ import com.marveliu.web.domain.vo.Account;
 
 public interface AccountService {
 
-    Account loadAccount(Integer appId);
+    AccountVo loadAccount(String username);
 
     boolean isAccountExistByUid(Integer uid);
 
     boolean registerAccount(User user);
 
-    String loadAccountRole(Integer appId);
+    String loadAccountRole(String username);
 }

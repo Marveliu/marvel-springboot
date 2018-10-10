@@ -5,7 +5,7 @@ package com.marveliu.web.constant;
  * @Date 2018/9/13 下午11:32
  **/
 
-public class Page {
+public class PageCons {
 
     public static final String DESC = "descend";
     public static final String ASC = "ascend";

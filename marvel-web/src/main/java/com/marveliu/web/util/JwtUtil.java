@@ -1,7 +1,7 @@
 package com.marveliu.web.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marveliu.web.domain.vo.JwtAccount;
+import com.marveliu.web.domain.vo.JwtAccountVo;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.DefaultHeader;
 import io.jsonwebtoken.impl.DefaultJwsHeader;
@@ -152,12 +152,12 @@ public class JwtUtil {
      * @throws SignatureException
      * @throws IllegalArgumentException
      */
-    public static JwtAccount parseJwt(String jwt, String appKey) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
+    public static JwtAccountVo parseJwt(String jwt, String appKey) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException {
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(appKey))
                 .parseClaimsJws(jwt)
                 .getBody();
-        JwtAccount jwtAccount = new JwtAccount();
+        JwtAccountVo jwtAccount = new JwtAccountVo();
         // 令牌ID
         jwtAccount.setTokenId(claims.getId());
         // 客户标识
