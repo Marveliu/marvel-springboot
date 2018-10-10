@@ -1,8 +1,7 @@
 package com.marveliu.web.dao.repository;
 
 import com.marveliu.web.component.dao.BaseDao;
-import com.marveliu.web.dao.entity.Log;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.marveliu.web.dao.entity.SysLog;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,5 +11,5 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public interface LogRepository extends BaseDao<Log, Long> {
+public interface LogRepository extends BaseDao<SysLog, Long> {
 }

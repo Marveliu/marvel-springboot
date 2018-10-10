@@ -11,5 +11,5 @@ import com.marveliu.web.domain.vo.Account;
 
 public interface AccountProvider {
 
-    Account loadAccount(String appId);
+    Account loadAccount(Integer appId);
 }

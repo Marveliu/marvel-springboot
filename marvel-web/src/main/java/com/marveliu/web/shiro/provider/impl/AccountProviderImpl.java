@@ -21,7 +21,7 @@ public class AccountProviderImpl implements AccountProvider {
     private AccountService accountService;
 
     @Override
-    public Account loadAccount(String appId) {
+    public Account loadAccount(Integer appId) {
         return accountService.loadAccount(appId);
     }
 }

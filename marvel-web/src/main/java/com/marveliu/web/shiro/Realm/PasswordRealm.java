@@ -49,7 +49,7 @@ public class PasswordRealm extends AuthorizingRealm {
         if (null == authenticationToken.getPrincipal() || null == authenticationToken.getCredentials()) {
             throw new UnknownAccountException();
         }
-        String appId = (String) authenticationToken.getPrincipal();
+        Integer appId = (Integer) authenticationToken.getPrincipal();
         Account account = accountProvider.loadAccount(appId);
         if (account != null) {
             // 用盐对密码进行MD5加密

@@ -1,10 +1,10 @@
 package com.marveliu.web.controller;
 
 
-import com.marveliu.web.constant.ResultCode;
 import com.marveliu.web.component.page.Result;
+import com.marveliu.web.constant.ResultCode;
+import com.marveliu.web.constant.UserEnum;
 import com.marveliu.web.dao.entity.User;
-import com.marveliu.web.domain.bo.AuthUser;
 import com.marveliu.web.service.AccountService;
 import com.marveliu.web.service.UserService;
 import com.marveliu.web.util.*;
@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,22 +57,22 @@ public class AccountController extends BasicAction {
     @PostMapping("/login")
     public Result accountLogin(HttpServletRequest request, HttpServletResponse response) {
         Map<String, String> params = HttpUtil.getRequestBodyMap(request);
-        String appId = params.get("appId");
+        Integer appId = Integer.valueOf(params.get("appId"));
         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
         String roles = accountService.loadAccountRole(appId);
         // 时间以秒计算,token有效刷新时间是token有效过期时间的2倍
         long refreshPeriodTime = 36000L;
-        String jwt = JwtUtil.issueJWT(UUID.randomUUID().toString(), appId,
+        String jwt = JwtUtil.issueJWT(UUID.randomUUID().toString(), appId.toString(),
                 "token-server", refreshPeriodTime >> 1, roles, null, SignatureAlgorithm.HS512);
         // 将签发的JWT存储到Redis： {JWT-SESSION-{appID} , jwt}
         redisTemplate.opsForValue().set("JWT-SESSION-" + appId, jwt, refreshPeriodTime, TimeUnit.SECONDS);
 
-        User authUser = userService.getUserByAppId(appId);
-        authUser.setPassword(null);
-        authUser.setSalt(null);
+        User user = userService.findById(appId);
+        user.setPassword(null);
+        user.setSalt(null);
 
         // LogExeManager.getInstance().executeLogTask(LogTaskFactory.loginLog(appId, IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "登录成功"));
-        return Result.oK(ResultCode.JWT_ISSUE_SUCCESS).addData("jwt", jwt).addData("user", authUser);
+        return Result.oK(ResultCode.JWT_ISSUE_SUCCESS).addData("jwt", jwt).addData("user", user);
     }
 
     /**
@@ -86,11 +87,11 @@ public class AccountController extends BasicAction {
     public Result accountRegister(HttpServletRequest request, HttpServletResponse response) {
 
         Map<String, String> params = HttpUtil.getRequestBodyMap(request);
-        AuthUser authUser = new AuthUser();
-        String uid = params.get("uid");
+        User user = new User();
+        Integer uid = Integer.valueOf(params.get("uid"));
         String password = params.get("password");
         String userKey = params.get("userKey");
-        if (StringUtils.isEmpty(uid) || StringUtils.isEmpty(password)) {
+        if (ObjectUtils.isEmpty(uid) || StringUtils.isEmpty(password)) {
             // 必须信息缺一不可,返回注册账号信息缺失
             return Result.error(ResultCode.USER_REG_FAIL).message("账户信息缺失");
         }
@@ -99,40 +100,28 @@ public class AccountController extends BasicAction {
             return Result.error(ResultCode.USER_REG_FAIL).message("账户已存在");
         }
 
-        authUser.setUid(uid);
+        user.setUid(uid);
 
         // 从Redis取出密码传输加密解密秘钥
         String tokenKey = redisTemplate.opsForValue().get("TOKEN_KEY_" + IpUtil.getIpFromRequest(WebUtils.toHttp(request)).toUpperCase() + userKey);
         String realPassword = AESUtil.aesDecode(password, tokenKey);
         String salt = CommonUtil.getRandomString(6);
         // 存储到数据库的密码为 MD5(原密码+盐值)
-        authUser.setPassword(MD5Util.md5(realPassword + salt));
-        authUser.setSalt(salt);
-        authUser.setCreateTime(DateUtil.getTS13());
+        user.setPassword(MD5Util.md5(realPassword + salt));
+        user.setSalt(salt);
+        user.setCreateTime(DateUtil.getTS13());
         if (!StringUtils.isEmpty(params.get("username"))) {
-            authUser.setUsername(params.get("username"));
+            user.setUsername(params.get("username"));
         }
         if (!StringUtils.isEmpty(params.get("realName"))) {
-            authUser.setRealName(params.get("realName"));
+            user.setRealName(params.get("realName"));
         }
         if (!StringUtils.isEmpty(params.get("avatar"))) {
-            authUser.setAvatar(params.get("avatar"));
+            user.setAvatar(params.get("avatar"));
         }
-        if (!StringUtils.isEmpty(params.get("phone"))) {
-            authUser.setPhone(params.get("phone"));
-        }
-        if (!StringUtils.isEmpty(params.get("email"))) {
-            authUser.setEmail(params.get("email"));
-        }
-        if (!StringUtils.isEmpty(params.get("sex"))) {
-            authUser.setSex(Byte.valueOf(params.get("sex")));
-        }
-        if (!StringUtils.isEmpty(params.get("createWhere"))) {
-            authUser.setCreateWhere(Byte.valueOf(params.get("createWhere")));
-        }
-        authUser.setStatus((byte) 1);
+        user.setStatus(UserEnum.NOMAL.getCode());
 
-        if (accountService.registerAccount(authUser)) {
+        if (accountService.registerAccount(user)) {
             // LogExeManager.getInstance().executeLogTask(LogTaskFactory.registerLog(uid, IpUtil.getIpFromRequest(WebUtils.toHttp(request)), (short) 1, "注册成功"));
             return Result.oK(ResultCode.USER_REG_SUCCESS);
         } else {

@@ -1,8 +1,8 @@
-package com.marveliu.web.util;
+package com.marveliu.web.handler;
 
 import com.marveliu.web.annotation.SLog;
-import com.marveliu.web.dao.entity.Log;
-import com.marveliu.web.service.LogService;
+import com.marveliu.web.dao.entity.SysLog;
+import com.marveliu.web.service.SysLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -18,24 +18,24 @@ import java.util.concurrent.TimeUnit;
 /**
  * @Author Marveliu
  * @Date 2018/9/17 下午10:44
- * @Description: 处理系统log，分发消息
+ * @Description: 处理系统syslog，分发消息
  **/
 
 @Slf4j
 @Component
-public class SLogUtil implements Runnable {
+public class SysLogHandler implements Runnable {
 
     @Autowired
-    private LogService logService;
+    private SysLogService sysLogService;
 
     ExecutorService es;
 
-    LinkedBlockingQueue<Log> queue;
+    LinkedBlockingQueue<SysLog> queue;
 
 
     @PostConstruct
     public void init() {
-        queue = new LinkedBlockingQueue<Log>();
+        queue = new LinkedBlockingQueue<SysLog>();
         int c = Runtime.getRuntime().availableProcessors();
         es = Executors.newFixedThreadPool(c);
         for (int i = 0; i < c; i++) {
@@ -58,11 +58,11 @@ public class SLogUtil implements Runnable {
      *
      * @param Logs 日志对象
      */
-    public void async(Log Logs) {
-        LinkedBlockingQueue<Log> queue = this.queue;
+    public void async(SysLog sysLog) {
+        LinkedBlockingQueue<SysLog> queue = this.queue;
         if (queue != null)
             try {
-                boolean re = queue.offer(Logs, 50, TimeUnit.MILLISECONDS);
+                boolean re = queue.offer(sysLog, 50, TimeUnit.MILLISECONDS);
                 if (!re) {
                     log.info("syslog queue is full, drop it ...");
                 }
@@ -75,9 +75,9 @@ public class SLogUtil implements Runnable {
      *
      * @param slog 日志对象
      */
-    public void sync(Log slog) {
+    public void sync(SysLog sysLog) {
         try {
-            logService.save(slog);
+            sysLogService.save(sysLog);
         } catch (Throwable e) {
             log.error("insert syslog sync fail", e);
         }
@@ -86,11 +86,11 @@ public class SLogUtil implements Runnable {
     @Override
     public void run() {
         while (true) {
-            LinkedBlockingQueue<Log> queue = this.queue;
+            LinkedBlockingQueue<SysLog> queue = this.queue;
             if (queue == null)
                 break;
             try {
-                Log Logs = queue.poll(1, TimeUnit.SECONDS);
+                SysLog Logs = queue.poll(1, TimeUnit.SECONDS);
                 if (Logs != null) {
                     sync(Logs);
                 }
@@ -106,7 +106,7 @@ public class SLogUtil implements Runnable {
      * @param log
      * @param async
      */
-    public void log(Log log, Boolean async) {
+    public void log(SysLog log, Boolean async) {
 
         if (async) {
             async(log);
@@ -125,11 +125,11 @@ public class SLogUtil implements Runnable {
      */
     @Async
     public void makeLogs(SLog sLog, String elLog, String src) {
-        Log log = new Log();
-        log.setLog(elLog);
-        log.setSrc(src);
-        log.setType(sLog.type());
-        log.setTag(sLog.tag());
-        this.log(log, sLog.async());
+        SysLog sysLog = new SysLog();
+        sysLog.setMsg(elLog);
+        sysLog.setSrc(src);
+        sysLog.setType(sLog.type());
+        sysLog.setTag(sLog.tag());
+        this.log(sysLog, sLog.async());
     }
 }

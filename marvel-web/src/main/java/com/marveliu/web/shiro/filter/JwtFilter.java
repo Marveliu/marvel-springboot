@@ -64,7 +64,7 @@ public class JwtFilter extends MPathMatchingFilter {
                     if (null != refreshJwt && refreshJwt.equals(jwt)) {
                         // 重新申请新的JWT
                         // 根据appId获取其对应所拥有的角色(这里设计为角色对应资源，没有权限对应资源)
-                        String roles = accountService.loadAccountRole(appId);
+                        String roles = accountService.loadAccountRole(Integer.valueOf(appId));
                         //seconds为单位,10 hours
                         long refreshPeriodTime = 36000L;
                         String newJwt = JwtUtil.issueJWT(UUID.randomUUID().toString(), appId,

@@ -1,7 +1,7 @@
 package com.marveliu.web.aop;
 
 import com.marveliu.web.annotation.SLog;
-import com.marveliu.web.util.SLogUtil;
+import com.marveliu.web.handler.SysLogHandler;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -39,7 +39,7 @@ public class SLogAspect implements BeanFactoryAware {
 
 
     @Autowired
-    private SLogUtil sLogUtil;
+    private SysLogHandler sLogUtil;
 
     private BeanFactory beanFactory;
 

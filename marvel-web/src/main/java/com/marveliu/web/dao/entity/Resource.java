@@ -14,7 +14,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class SysPermission extends AbstractModel<Integer> {
+public class Resource extends AbstractModel<Integer> {
 
     @Id
     @GeneratedValue
@@ -64,6 +64,6 @@ public class SysPermission extends AbstractModel<Integer> {
      * 关联角色
      */
     @ManyToMany
-    @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
-    private List<SysRole> roles;
+    @JoinTable(name = "RolePermission", joinColumns = {@JoinColumn(name = "permissionId")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
+    private List<Role> roles;
 }

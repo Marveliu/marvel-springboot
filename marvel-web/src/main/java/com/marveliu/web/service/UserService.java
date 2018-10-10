@@ -11,7 +11,5 @@ import com.marveliu.web.dao.entity.User;
 
 public interface UserService extends BaseService<User, Integer> {
 
-    public boolean authorityUserRole(String uid, int roleId);
-
-    public User getUserByAppId(String appId);
+    public boolean authorityUserRole(User user, Integer roleId);
 }

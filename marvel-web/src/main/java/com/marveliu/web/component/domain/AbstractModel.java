@@ -36,7 +36,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
             "COMMENT '备注'")
     private String remark;
 
-    @Column(name = "del", columnDefinition = "unsigned tinyint default 0 comment '标记删除字段 0未删除 1已删除'")
+    @Column(name = "del", columnDefinition = "tinyint default 0 comment '标记删除字段 0未删除 1已删除'")
     private int del = Status.DEL_NO;
 
     public int getCreator() {

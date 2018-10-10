@@ -14,7 +14,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class SysRole extends AbstractModel<Integer> {
+public class Role extends AbstractModel<Integer> {
 
     @Id
     @GeneratedValue
@@ -39,8 +39,8 @@ public class SysRole extends AbstractModel<Integer> {
      * 角色 -- 权限关系：多对多关系;
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "SysRolePermission", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "permissionId")})
-    private List<SysPermission> permissions;
+    @JoinTable(name = "RolePermission", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "permissionId")})
+    private List<Resource> resources;
 
 
     /**
@@ -48,6 +48,6 @@ public class SysRole extends AbstractModel<Integer> {
      * 一个角色对应多个用户
      */
     @ManyToMany
-    @JoinTable(name = "SysUserRole", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "uid")})
+    @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "uid")})
     private List<User> users;
 }

@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends BaseDao<User, Integer> {
 
-    User findUserByName(String name);
+    User findUserByUsername(String name);
 
 }

@@ -2,9 +2,9 @@ package com.marveliu.web.service.impl;
 
 import com.marveliu.web.component.dao.BaseDao;
 import com.marveliu.web.component.service.impl.BaseServiceImpl;
-import com.marveliu.web.dao.entity.Log;
+import com.marveliu.web.dao.entity.SysLog;
 import com.marveliu.web.dao.repository.LogRepository;
-import com.marveliu.web.service.LogService;
+import com.marveliu.web.service.SysLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class LogServiceImpl extends BaseServiceImpl<Log, Long> implements LogService {
+public class SysLogServiceImpl extends BaseServiceImpl<SysLog, Long> implements SysLogService {
 
 
     @Autowired
     private LogRepository logDao;
 
     @Override
-    public BaseDao<Log, Long> getDAO() {
+    public BaseDao<SysLog, Long> getDAO() {
         return logDao;
     }
 
