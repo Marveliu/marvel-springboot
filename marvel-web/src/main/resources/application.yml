@@ -51,11 +51,12 @@ spring:
     one-in-view: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     database: MYSQL
-    show_sql: false
+    show_sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate.format_sql: true
+      hibernate.enable_lazy_load_no_trans: true
   quartz:
     job-store-type: jdbc
     properties:

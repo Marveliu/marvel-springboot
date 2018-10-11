@@ -3,9 +3,13 @@ package com.marveliu.web.dao.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.Target;
 
+import javax.jdo.annotations.Unique;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author: Marveliu
@@ -15,6 +19,7 @@ import java.util.List;
 
 @Data
 @Entity
+@ToString(exclude = {"users"})
 public class Role extends AbstractModel<Integer> {
 
     @Id
@@ -26,6 +31,7 @@ public class Role extends AbstractModel<Integer> {
      */
     private String name;
 
+    @Unique
     private String code;
 
     /**
@@ -41,8 +47,12 @@ public class Role extends AbstractModel<Integer> {
     /**
      * 角色 -- 权限关系：多对多关系;
      */
+    @Target(Resource.class)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinTable(name = "RoleResource", joinColumns = @JoinColumn(name = "roleId"), inverseJoinColumns = @JoinColumn(name = "resourceId"))
+    private Set<Resource> resources;
+
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinTable(name = "RoleResource", joinColumns = {@JoinColumn(name = "roleId")}, inverseJoinColumns = {@JoinColumn(name = "resourceId")})
-    private List<Resource> resources;
+    @ManyToMany(targetEntity = User.class, mappedBy = "roles")
+    private List<User> users;
 }

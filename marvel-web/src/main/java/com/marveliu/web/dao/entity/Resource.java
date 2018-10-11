@@ -3,6 +3,8 @@ package com.marveliu.web.dao.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Data
 @Entity
+@ToString(exclude = {"roles"})
 public class Resource extends AbstractModel<Integer> {
 
     @Id
@@ -61,4 +64,21 @@ public class Resource extends AbstractModel<Integer> {
      */
     private Boolean available = Boolean.FALSE;
 
+
+    @JsonIgnore
+    @Target(Role.class)
+    @ManyToMany(mappedBy = "resources")
+    private List<Role> roles;
+
+    public String getUrlWithMethod() {
+        return url + "==" + method;
+    }
+
+    public String getRolesName() {
+        StringBuilder rs = new StringBuilder();
+        for (Role role : getRoles()) {
+            rs.append(role.getId() + ",");
+        }
+        return rs.toString();
+    }
 }

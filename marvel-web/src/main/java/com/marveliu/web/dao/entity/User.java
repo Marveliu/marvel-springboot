@@ -1,6 +1,5 @@
 package com.marveliu.web.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marveliu.web.component.domain.AbstractModel;
 import lombok.Data;
 import org.hibernate.annotations.Target;
@@ -52,8 +51,7 @@ public class User extends AbstractModel<Integer> {
      * 一个用户具有多个角色
      */
     @Target(Role.class)
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "UserRole", joinColumns = {@JoinColumn(name = "uid")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
     private List<Role> roles;
 

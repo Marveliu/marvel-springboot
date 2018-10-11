@@ -10,4 +10,5 @@ import com.marveliu.web.dao.entity.Resource;
  **/
 
 public interface ResourceRepository extends BaseDao<Resource, Integer> {
+
 }

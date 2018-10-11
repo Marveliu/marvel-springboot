@@ -33,7 +33,6 @@ public class UserController {
     public Result getUserRoleList(@PathVariable String appId) {
         String roles = accountService.loadAccountRole(appId);
         Set<String> roleSet = JwtUtil.split(roles);
-        log.info(roleSet.toString());
         return Result.oK().addData("roles", roleSet);
     }
 

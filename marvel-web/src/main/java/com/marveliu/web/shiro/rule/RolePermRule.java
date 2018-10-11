@@ -28,6 +28,11 @@ public class RolePermRule implements Serializable {
      */
     private String needRoles;
 
+    public RolePermRule(String url, String needRoles) {
+        this.url = url;
+        this.needRoles = needRoles;
+    }
+
     public StringBuilder toFilterChain() {
         if (null == this.url || this.url.isEmpty()) {
             return null;

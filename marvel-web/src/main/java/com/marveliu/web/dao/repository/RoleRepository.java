@@ -9,5 +9,7 @@ import com.marveliu.web.dao.entity.Role;
  * @Description:
  **/
 
-public interface RoleRepository extends BaseDao<Role,Integer> {
+public interface RoleRepository extends BaseDao<Role, Integer> {
+
+    Role findDistinctByCode(String code);
 }

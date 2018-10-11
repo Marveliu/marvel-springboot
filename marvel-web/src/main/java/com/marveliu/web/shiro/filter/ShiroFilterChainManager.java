@@ -67,6 +67,8 @@ public class ShiroFilterChainManager {
         // auth 默认需要认证过滤器的URL 走auth--PasswordFilter
         List<String> defalutAuth = Arrays.asList("/account/**");
         defalutAuth.forEach(auth -> filterChain.put(auth, "auth"));
+
+        // todo:一旦发生变动，貌似不能动态的更新
         // -------------dynamic 动态URL
         if (shiroFilterRulesProvider != null) {
             List<RolePermRule> rolePermRules = this.shiroFilterRulesProvider.loadRolePermRules();

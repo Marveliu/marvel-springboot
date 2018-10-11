@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "2d18067b-5383-481d-bd8e-e027aa103b55",
+		"name": "marvel-springboot",
+		"description": "the collections of test-case for marvel-springboot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "marvel-register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dd39930e-5df5-4968-bda9-c97639e76853",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.sendRequest(\"http://localhost:8080/v1/account/register?tokenKey=get\", function (err, response) {",
+							"    var key = response.json().data.tokenKey;",
+							"    var userKey = response.json().data.userKey;",
+							"    // var tokenKey = CryptoJS.enc.Utf8.parse(key.toString()).toString();",
+							"     console.log(userKey);",
+							"    // var passwd = CryptoJS.AES.encrypt(\"hahahaha\",tokenKey).toString();",
+							"    // var password = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passwd));",
+							"    ",
+							"    var tokenKey = CryptoJS.enc.Utf8.parse(key);",
+							"    var srcs = CryptoJS.enc.Utf8.parse(\"1234\");",
+							"    ",
+							"    var password = CryptoJS.AES.encrypt(srcs, tokenKey, {iv: tokenKey, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});",
+							"",
+							"    pm.environment.set(\"password\", password.toString());",
+							"    pm.environment.set(\"userKey\", userKey.toString());",
+							"    ",
+							"    ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"uid\": \"tom\",\r\n      \"username\":\"tom\",\r\n      \"password\": \"{{password}}\",\r\n      \"methodName\": \"register\",\r\n      \"userKey\": \"{{userKey}}\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/account/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "marvel-jwt",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw"
+					},
+					{
+						"key": "appId",
+						"value": "tom"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/user/role/tom?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"user",
+						"role",
+						"tom"
+					],
+					"query": [
+						{
+							"key": "jwt",
+							"value": "eyJhbGciOiJIUzUxMiIsInppcCI6IkRFRiJ9.eNo0ysEKwjAMANB_yXmBJk3WdH_j2hw2QWWtIgz_3Xrw-ngn7H2DBXQWqjUpVouOQiVjDuZogTIVKYXWCBO05zoyG1sKUXTI1tqQfr_6DZsfLz9-eOmwkDIpcVKawN-PPwgrfb4AAAD__w.jsD-zIXRQHLUIvwjRrsUnHkI_4unJH6JZ2zzTfUGdSh0kr0uQMmdukSPzJPlBKjqw3nbb0ysuRU5cFBxMMz_Uw",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "marvel-login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d022970e-62bd-477f-827f-7fcb23666bca",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"pm.sendRequest(\"http://localhost:8080/v1/account/register?tokenKey=get\", function (err, response) {",
+							"    var key = response.json().data.tokenKey;",
+							"    var userKey = response.json().data.userKey;",
+							"    // var tokenKey = CryptoJS.enc.Utf8.parse(key.toString()).toString();",
+							"     console.log(userKey);",
+							"    // var passwd = CryptoJS.AES.encrypt(\"hahahaha\",tokenKey).toString();",
+							"    // var password = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passwd));",
+							"    ",
+							"    var tokenKey = CryptoJS.enc.Utf8.parse(key);",
+							"    var srcs = CryptoJS.enc.Utf8.parse(\"1234\");",
+							"    ",
+							"    var password = CryptoJS.AES.encrypt(srcs, tokenKey, {iv: tokenKey, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7});",
+							"",
+							"    pm.environment.set(\"password\", password.toString());",
+							"    pm.environment.set(\"userKey\", userKey.toString());",
+							"    ",
+							"    ",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"username\":\"tom\",\r\n      \"password\": \"{{password}}\",\r\n      \"methodName\": \"login\",\r\n      \"userKey\": \"{{userKey}}\",\r\n      \"timestamp\": \"{{$timestamp}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/account/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"account",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

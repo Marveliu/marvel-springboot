@@ -5,6 +5,7 @@ import com.marveliu.web.filter.XssFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 
 import javax.servlet.Filter;
 import java.util.Map;
@@ -37,4 +38,19 @@ public class FilterConfig {
         filterRegistrationBean.setInitParameters(initParameters);
         return filterRegistrationBean;
     }
+
+    /**
+     * 解决jpa 懒加载出现的no session问题
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new OpenEntityManagerInViewFilter());
+        filterRegistrationBean.addInitParameter("urlPatterns", "/*");
+        return filterRegistrationBean;
+    }
+
+
 }

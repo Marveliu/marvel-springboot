@@ -151,7 +151,9 @@ public class JwtFilter extends MPathMatchingFilter {
         return new JwtToken(ipHost, deviceInfo, jwt, appId);
     }
 
-    // 验证当前用户是否属于mappedValue任意一个角色
+    /**
+     * 验证当前用户是否属于mappedValue任意一个角色
+     */
     private boolean checkRoles(Subject subject, Object mappedValue) {
         String[] rolesArray = (String[]) mappedValue;
         return rolesArray == null || rolesArray.length == 0 || Stream.of(rolesArray).anyMatch(role -> subject.hasRole(role.trim()));
