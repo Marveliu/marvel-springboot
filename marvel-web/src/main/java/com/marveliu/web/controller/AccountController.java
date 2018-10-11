@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -91,7 +92,7 @@ public class AccountController extends BasicAction {
      */
     @ApiOperation(value = "用户注册", notes = "POST用户注册")
     @PostMapping("/register")
-    public Result accountRegister(@RequestBody RegUserParam regUserParam, HttpServletRequest request) {
+    public Result accountRegister(@Valid @RequestBody RegUserParam regUserParam, HttpServletRequest request) {
 
         // Map<String, String> params = HttpUtil.getRequestBodyMap(request);
         // Integer uid = Integer.valueOf(params.get("uid"));

@@ -35,6 +35,13 @@ public class Result {
         return this;
     }
 
+    public Result addData(Map<String, Object> map) {
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            this.data.put(entry.getKey(), entry.getValue());
+        }
+        return this;
+    }
+
     /**
      * 默认成功返回值
      *
@@ -61,7 +68,7 @@ public class Result {
      * @return
      */
     public static Result error() {
-        return new Result().error(ResultCodeEnum.SUCCESS.getCode(), ResultCodeEnum.SUCCESS.getMsg());
+        return new Result().error(ResultCodeEnum.ERROR.getCode(), ResultCodeEnum.ERROR.getMsg());
     }
 
     /**
@@ -82,7 +89,7 @@ public class Result {
      * @return
      */
     private Result ok(int statusCode, String statusMsg) {
-        this.addMeta("success", Boolean.TRUE);
+        this.addMeta("status", Boolean.TRUE);
         this.addMeta("code", statusCode);
         this.addMeta("msg", statusMsg);
         this.addMeta("timestamp", new Timestamp(System.currentTimeMillis()));
@@ -97,7 +104,7 @@ public class Result {
      * @return
      */
     private Result error(int statusCode, String statusMsg) {
-        this.addMeta("success", Boolean.FALSE);
+        this.addMeta("status", Boolean.FALSE);
         this.addMeta("code", statusCode);
         this.addMeta("msg", statusMsg);
         this.addMeta("timestamp", new Timestamp(System.currentTimeMillis()));

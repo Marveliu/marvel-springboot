@@ -5,13 +5,22 @@ import com.marveliu.web.exception.UnauthorizedException;
 import com.marveliu.web.exception.UserNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.ShiroException;
+import org.apache.tomcat.jni.Local;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -19,9 +28,13 @@ import java.util.Map;
  * @Date 2018/7/18 9:02 PM
  **/
 
+@ResponseBody
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * 默认异常处理实现
@@ -39,13 +52,32 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * 全局参数检验捕获
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result ParamErrorHandler(MethodArgumentNotValidException e) {
+        BindingResult result = e.getBindingResult();
+        StringBuffer sb = new StringBuffer();
+        List<FieldError> fieldErrors = result.getFieldErrors();
+        Locale currentLocale = LocaleContextHolder.getLocale();
+        Map<String, Object> map = new HashMap<>();
+        for (FieldError fieldError : fieldErrors) {
+            map.put(fieldError.getField(), messageSource.getMessage(fieldError, currentLocale));
+        }
+
+        return Result.error().message("参数错误").addData(map);
+    }
+
+    /**
      * UserNotExistException
      *
      * @param e
      * @return
      */
     @ExceptionHandler(UserNotExistException.class)
-    @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Map<String, Object> handleUserNotExistsException(UserNotExistException e) {
         Map<String, Object> map = new HashMap<>();

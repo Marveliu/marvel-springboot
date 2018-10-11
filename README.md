@@ -39,7 +39,7 @@
 
 ## Todo
 
-1. 规范性参数校验
+- queryDsl封装BaseServiceImpl
 
 ## usages
 
