@@ -6,11 +6,13 @@ import com.marveliu.web.component.domain.BaseModel;
 import com.marveliu.web.component.service.BaseService;
 import com.marveliu.web.constant.QueryTypeEnum;
 import com.marveliu.web.constant.CommonEnum;
+import com.querydsl.core.QueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -32,6 +34,9 @@ import java.util.*;
 @Slf4j
 public abstract class BaseServiceImpl<T extends BaseModel<ID>, ID extends Serializable> implements BaseService<T, ID> {
 
+
+    @Autowired
+    protected QueryFactory queryFactory;
 
     @Override
     public abstract BaseDao<T, ID> getDAO();

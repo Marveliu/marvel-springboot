@@ -39,17 +39,18 @@ public class RedisConfig extends CachingConfigurerSupport {
     /**
      * fastjson redisTemplate
      *
-     * @param factory
+     * @param jedisConnectionFactory
      * @return
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory factory) {
+    @SuppressWarnings("unchecked")
+    public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashValueSerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new FastJsonRedisSerializer(Object.class));
-        redisTemplate.setConnectionFactory(factory);
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
         return redisTemplate;
     }
 
@@ -80,7 +81,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      * @return
      */
     @Bean
-    public RedisCacheManager cacheManager(RedisTemplate redisTemplate) {
+    public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(Duration.ofSeconds(100));
         // 获得redis缓存管理类

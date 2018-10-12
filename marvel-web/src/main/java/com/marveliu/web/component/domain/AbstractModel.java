@@ -19,6 +19,7 @@ public abstract class AbstractModel<ID extends Serializable> implements BaseMode
     @Column(columnDefinition = "int default 0")
     private int creator = 0;
 
+    // todo:createTime应该存储long
     @Column(updatable = false, columnDefinition = "TIMESTAMP " +
             "NOT NULL " +
             "DEFAULT CURRENT_TIMESTAMP " +

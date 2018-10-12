@@ -29,6 +29,6 @@ public class UserServiceTest {
 
     @Test
     public void f0_test() {
-
+        userService.del(2);
     }
 }

@@ -2,6 +2,7 @@ package com.marveliu.web.component.service;
 
 import com.marveliu.web.component.dao.BaseDao;
 import com.marveliu.web.component.domain.BaseModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

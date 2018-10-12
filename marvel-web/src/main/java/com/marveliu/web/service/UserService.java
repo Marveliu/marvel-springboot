@@ -12,6 +12,7 @@ import com.marveliu.web.dao.repository.UserRepository;
 
 public interface UserService extends BaseService<User, Integer> {
 
+    @Override
     UserRepository getDAO();
 
     boolean authorityUserRole(User user, Integer roleId);
