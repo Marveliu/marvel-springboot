@@ -65,6 +65,7 @@ spring:
           scheduler:
             instanceName: clusteredScheduler
             instanceId: AUTO
+            startupDelay: 10
           jobStore:
             class: org.quartz.impl.jdbcjobstore.JobStoreTX
             driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
