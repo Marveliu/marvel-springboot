@@ -135,16 +135,16 @@ public class PasswordFilter extends AccessControlFilter {
 
     private boolean isAccountRegisterPost(ServletRequest request) {
         Map<String, String> map = HttpUtil.getRequestBodyMap(request);
-        String uid = map.get("uid");
-        String username = map.get("username");
+        String userName = map.get("username");
+        String realName = map.get("realName");
         String methodName = map.get("methodName");
         String password = map.get("password");
         return (request instanceof HttpServletRequest)
                 && ((HttpServletRequest) request).getMethod().toUpperCase().equals("POST")
-                && null != username
+                && null != userName
                 && null != password
                 && null != methodName
-                && null != uid
+                && null != realName
                 && methodName.equals("register");
     }
 

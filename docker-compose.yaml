@@ -13,24 +13,35 @@ services:
   mysql:
     container_name: v-mysql
     image: mysql/mysql-server:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
     environment:
-      MYSQL_DATABASE: test
+      MYSQL_DATABASE: marvel_springboot
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
     ports:
     - "3306:3306"
     restart: always
 
+  redis:
+    build: ./redis
+    container_name: v-redis
+    restart: always
+    ports:
+    - "6379:6379"
+    volumes:
+    - ./redis/data:/data
+
   app:
     restart: always
-    build: ./app
-    working_dir: /app
+    build: ./
+    working_dir: /app/marvel-web
     volumes:
-    - ./app:/app
+    - ./:/app
     - ~/.m2:/root/.m2
     expose:
     - "8080"
     depends_on:
     - nginx
     - mysql
-    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker
+    - redis
+    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker -DskipTests

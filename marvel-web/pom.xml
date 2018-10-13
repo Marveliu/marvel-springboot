@@ -162,6 +162,12 @@
             <version>1</version>
         </dependency>
 
+        <!--数据库版本管理-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
 
         <!--性能测试依赖-->
         <dependency>

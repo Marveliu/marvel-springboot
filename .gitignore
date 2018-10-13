@@ -80,3 +80,5 @@ hs_err_pid*
 /marvel-web/logs/
 /marvel-web/marvel-springboot/
 /marvel-web/marvelUpload/
+/redis/data/dump.rdb
+/redis/data/appendonly.aof

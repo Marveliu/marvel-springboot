@@ -94,12 +94,6 @@ public class AccountController extends BasicAction {
     @PostMapping("/register")
     public Result accountRegister(@Valid @RequestBody RegUserParam regUserParam, HttpServletRequest request) {
 
-        // Map<String, String> params = HttpUtil.getRequestBodyMap(request);
-        // Integer uid = Integer.valueOf(params.get("uid"));
-        // String password = params.get("password");
-        // String userKey = params.get("userKey");
-
-
         if (!ObjectUtils.isEmpty(userService.getDAO().findUserByUsername(regUserParam.getUsername()))) {
             // 账户已存在
             return Result.error(ResultCodeEnum.USER_REG_FAIL).message("用户名已存在");
